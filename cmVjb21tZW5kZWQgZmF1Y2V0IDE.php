@@ -2,6 +2,8 @@
 
 
 
+
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     eval(str_replace('<?php', "", get_e("shortlink_index.php")));
@@ -14,7 +16,6 @@ c();
 
 $web = [
     "keforcash.com",
-    //"bitmonk.me",
     "claimcoin.in",
     "faucetspeedbtc.com",
     "coinpayz.xyz",
@@ -38,12 +39,8 @@ $web = [
     "freebinance.top",
     "faucetcrypto.net",
     "freesolana.top",
-    "trxking.xyz",
-    "litecoinline.com",
-    "coinsfaucet.xyz",
-    "earnbtc.pw",
-    "eurofaucet.de",
-    "ourcoincash.xyz",
+    #"trxking.xyz",
+    #"ourcoincash.xyz",
     "feyorra.top",
     "claimtrx.com",
     "bitsfree.net",
@@ -51,7 +48,7 @@ $web = [
     "earnfreebtc.io",
     "bambit.xyz",
     #"feyorra.site",
-    #"kiddyearner.com",
+    "kiddyearner.com",
     "banfaucet.com",
 ];
 
@@ -60,7 +57,7 @@ for ($i = 0; $i < count($web); $i++) {
         ket($i + 1, $web[$i]);
     }
 }
-
+#$p = 2;
 $p = preg_replace("/[^0-9]/", "", trim(tx("number")));
 $host = $web[$p - 1];
 if (!$host) {
@@ -68,6 +65,9 @@ if (!$host) {
 }
 
 eval(str_replace('name_host', explode(".", $host)[0], str_replace('example', $host, 'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="vie_free";')));
+
+
+
 
 ket(1, "new cookie", 2, "old cookie (jika tersedia)");
 $tx = tx("number", 1);
@@ -79,8 +79,8 @@ $u_a = save("useragent");
 $u_c = save(cookie_only);
 /*$r = base_run(host."faucet");
 $t = $r["token_csrf"];
-print "https://rscaptcha.com/captcha/getimage?token=".explode('"',$t[2][2])[0].n.n;//L(6);
-$img = curl("https://rscaptcha.com/captcha/getimage?token=".explode('"',$t[2][2])[0], h_rs())[1];
+print "https://rscaptcha.com/captcha/getimage?token=".explode('"', $t[2][2])[0].n.n;//L(6);
+$img = curl("https://rscaptcha.com/captcha/getimage?token=".explode('"', $t[2][2])[0], h_rs())[1];
 #die(print_r($img));
 for ($i = 0; $i < 5; $i++) {
             $cap = coordinate($img, $i);
@@ -90,10 +90,10 @@ for ($i = 0; $i < 5; $i++) {
         }
 
 $data = http_build_query([
-explode('"',$t[1][0])[0] => explode('"',$t[2][0])[0],
+explode('"', $t[1][0])[0] => explode('"', $t[2][0])[0],
 "captcha" => "rscaptcha",
-explode('"',$t[1][1])[0] => explode('"',$t[2][1])[0],
-explode('"',$t[1][2])[0] => explode('"',$t[2][2])[0],
+explode('"', $t[1][1])[0] => explode('"', $t[2][1])[0],
+explode('"', $t[1][2])[0] => explode('"', $t[2][2])[0],
 "rscaptcha_response" => $cap["ans"]
 ]);
 
@@ -101,13 +101,13 @@ $rr = base_run("https://claimtrx.com/faucet/verify", $data);
 
 print($data);
 die(print_r($r["res"]));*/
-#$r = base_run(host."links");die(print_r($r));
+//$r = base_run(host."links");$bypass = new_visit($r);die(print_r($bypass));
 
 dashboard:
 $redirect = "dashboard";
 $r = base_run(host . "dashboard");
 $link = $r["link"];
-
+#die(print_r($r));
 
 //goto faucet;
 if ($r["status"] == 403) {
@@ -193,7 +193,7 @@ while (true) {
     if (!$r["left"][0]) {
         goto achievement;
     }
-    $bypas = visit_short($r);
+    $bypas = bbb($r);
 
     if ($bypas == "refresh" || $bypas == "skip") {
         goto shortlinks;
@@ -243,7 +243,7 @@ for ($i = 0; $i < count($dark[0]); $i++) {
             goto achievement;
         }
 
-        base_run(str_replace("/back","/verify",$bypas));
+        base_run(str_replace("/back","/verify", $bypas));
         print h."oke mantap kafir".n;
         line();
         goto dark;
@@ -282,8 +282,8 @@ if ($r["status"] == 403) {
     goto firewall;
 }
 
-for ($v = 0; $v < count($r["left"]); $v++) {
-     if (explode("/", $r["left"][$v])[0] >= explode("/", $r["left"][$v])[1]) {
+for ($v = 0; $v < count($r["count"]); $v++) {
+     if (explode("/", $r["count"][$v])[0] >= explode("/", $r["count"][$v])[1]) {
         $t = $r["token_csrf"];
         if ($t) {
             $data = data_post($t, "null");
@@ -404,9 +404,9 @@ while (true) {
 
             if ($redirect == "dashboard") {
                 goto dashboard;
-            } /*elseif($redirect == "ptc") {
+            } /*elseif ($redirect == "ptc") {
                 goto ptc;
-            } elseif($redirect == "faucet") {
+            } elseif ($redirect == "faucet") {
                 goto faucet;
             } */elseif ($redirect == "auto") {
                 goto auto;
@@ -424,15 +424,15 @@ function base_run($url, $data = 0) {
     $header = h_x();
     $r = curl($url, $header, $data, true, false);
     /*if (!$r[1]) {
-       print m."loss page!";
+       print p ."loss page!";
        r();
        goto tai;
     }*/
     unset($header);
-    #if($r[0][1]["http_code"] == 0){die(file_put_contents("bitmun.html",$r[1]));}
-    #$r[1] = file_get_contents("bitmun.html");
-    #die(file_put_contents("asu.html",$r[1]));
-    preg_match("#Just a moment#is", $r[1], $cloudflare);
+    #if ($r[0][1]["http_code"] == 0) {die(file_put_contents("bitmun.html", $r[1]));}
+    #$r[1] = file_get_contents("asu.html");
+    #die(file_put_contents("asu.html", $r[1]));
+    preg_match("#Just a moment#is", $r[1], $cf);
     preg_match("#(login)#is", str_replace(["Login every", "login with", "Daily Login", "timewall.io/users/login"], "", $r[1]), $register);
     preg_match("#(antibotlink)#is", $r[1], $antb);
     preg_match("#(Protecting faucet|Daily limit reached|for Auto Faucet)#is", $r[1], $limit);
@@ -451,42 +451,71 @@ function base_run($url, $data = 0) {
         }
     }
     if (!$balance) {
-        preg_match('#(<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","",$r[1]), $ball);
+        preg_match('#(<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","", $r[1]), $ball);
         $balance = $ball[2];
     }
 
     preg_match_all('#hidden" name="(.*?)" value="(.*?)"#', str_replace('name="anti', '', $r[1]), $t_cs);
 
     preg_match('#(timer|wait*)( = *)(\d+)#is', $r[1], $tmr);
-    preg_match_all('#(<iclass="feather-linkme-1"></i>|<h2class="fw-bold">|<divclass="titlemb-3"><h2>|<h5class="card-titletext-center">|<h5class="c_titletext-center">|<spanclass="link-name">|<h4class="card-titlemt-0">|<h5class="title">|class="card-titlefont-size-18mt-0">|<h3class="card-titlemx-auto">|"class="text-dark">|<h5class="card-titletext-centerfont-size-18">|<h5class="card-titlemt-0">)(.*?)(<)#is', str_replace('auto">Hard','',trimed($r[1])), $x);
-    preg_match_all('#(https?:\/\/[a-zA-Z0-9\/-\/.-]*\/(go|make|pre_verify)\/?[a-zA-Z0-9\/-\/.]*)(.*?)#is', $r[1], $y);
-#die(print_r($x));
-
-    if ($y[0]) {
-        $y[0] = array_values(array_unique($y[0]));
+    if(preg_match("#(keforcash.com)#is", host)){
+        $Attribute = "card border p-0";
+    } elseif(preg_match("#(faucetspeedbtc.com)#is", host)){
+        $Attribute = "card bg-metallic";
+    } elseif(preg_match("#(coinpayz.xyz)#is", host)){
+        $Attribute = "card card-body text-center bg-metallic";
+    } elseif(preg_match("#(insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz)#is", host)){
+        $Attribute = "card card-body text-center";
+    } elseif(preg_match("#(fundsreward.com)#is", host)){
+        $Attribute = "card card-body text-center bg-secondary rounded";
+    } elseif(preg_match("#(feyorra.top|claimtrx.com)#is", host)){
+        $Attribute = "col-md-6 col-lg-4 mb-3 mb-lg-0";
+    } elseif(preg_match("#(kiddyearner.com)#is", host)){
+        $Attribute = "claim-card";
+    } elseif(preg_match("#(banfaucet.com)#is", host)){
+        $Attribute = "col-lg-6 col-xl-4";
     }
-#unset($y[0][0]);die(print_r($y[0]));
-    preg_match_all('#(>| |\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), ""], '', $r[1])), $z);
     
-    if ($x[2]) {
-        $ii = count($z[2]);
-        #$yy = count($y[0]);#die(print_r($z));
-        for ($i = 0; $i < $ii; $i++) {
-            #$y[0] = array_values($y[0]);
-            if ("0" == explode("/", $z[2][$i])[0]) {                
-                unset($z[2][$i]);
-                unset($x[2][$i]);
-                /*if ($ii == $yy) {
-                   unset($y[0][$i]);
-                   $y[0] = array_values($y[0]);
-                }*/
+     
+   #; 
+    $dom = new DOMDocument;
+    $dom->loadHTML(str_replace('Remaining', '', $r[1]));
+    $entries = $dom->getElementsByTagName('div');
+
+foreach ($entries as $entry) {
+    $classAttribute = $entry->getAttribute('class');
+    if (strpos($classAttribute, $Attribute) !== false) {# || strpos($classAttribute, 'card bg-metallic') !== false || strpos($classAttribute, 'col-12 col-md-6 col-xl-4') !== false || strpos($classAttribute, 'col-lg-3') !== false || strpos($classAttribute, '') !== false) {
+    
+        $titleNodeH3 = $entry->getElementsByTagName('h3')->item(0);
+        $titleNodeH4 = $entry->getElementsByTagName('h4')->item(0);
+        $titleNodeH5 = $entry->getElementsByTagName('h5')->item(0);
+        $titleNodeH6 = $entry->getElementsByTagName('h6')->item(0);
+        $name[] = $titleNodeH3 ? $titleNodeH3->nodeValue : ($titleNodeH4 ? $titleNodeH4->nodeValue : ($titleNodeH5 ? $titleNodeH5->nodeValue : ($titleNodeH6 ? $titleNodeH6->nodeValue : '')));
+
+        $aTag = $entry->getElementsByTagName('a');
+        if ($aTag->length > 0) {
+            $claimLink = $aTag->item(0)->getAttribute('href');
+            $claimCountNode = $aTag->item(0)->getElementsByTagName('span')->item(0);
+        } else {
+            $buttonTag = $entry->getElementsByTagName('button');
+            if ($buttonTag->length > 0) {
+                $claimCountNode = $buttonTag->item(0)->getElementsByTagName('span')->item(0);
             }
         }
-#die(print_r($x[2]));
-        $z[2] = array_values($z[2]);
-        $x[2] = array_values($x[2]);
+        if(!$claimCountNode){
+            $claimCountNode = $entry->getElementsByTagName('p')->item(0);
+        };
+        
+        
+        $claimCount = $claimCountNode ? trim($claimCountNode->nodeValue) : '';
+        $visit[] = $claimLink;
+        //$left[] = $claimCount;        
+        
     }
+}
 
+
+    preg_match_all('#(>|\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), ""], '', $r[1])), $count);
     preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $r[1], $u_r);
     preg_match_all("#(https?:\/\/" . sc . "[a-z\/.]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", $r[1], $link);
 
@@ -515,9 +544,10 @@ function base_run($url, $data = 0) {
         "balance" => ltrim(strip_tags($balance)),
         "timer" => $tmr[3],
         "token_csrf" => $t_cs,
-        "visit" => $y[0],
-        "left" => $z[2],
-        "name" => $x[2],
+        "name" => $name,
+        "visit" => $visit,
+        "left" => $count[2],
+        "count" => $count[2],
         "notif" => preg_replace("/[^a-zA-Z0-9-!. ]/", "", $n[2]),
         "url" => $u_r[0],
         "link" => array_merge(array_unique($link[0])),
@@ -558,19 +588,6 @@ $header[] = 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7';
 }
 
 
-function h_tk($json) {
-    global $u_a,$u_c;
-    $header[] = 'host: tokenmix.pro';
-    $header[] = 'accept: application/json, text/plain, */*';
-    if ($json) {
-       $header[] = 'content-type: application/json';
-    }
-    $header[] = 'user-agent: '.$u_a;
-    $header[] = 'referer: https://tokenmix.pro/';
-    $header[] = 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7';
-    $header[] = 'cookie: '.$u_c;
-    return $header;
-}
 
 
 
