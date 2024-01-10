@@ -477,7 +477,7 @@ function base_run($url, $data = 0) {
     }
     
      
-   #; 
+if(preg_match("#(".$Attribute.")#is", $r[1])){
     $dom = new DOMDocument;
     $dom->loadHTML(str_replace('Remaining', '', $r[1]));
     $entries = $dom->getElementsByTagName('div');
@@ -512,9 +512,13 @@ foreach ($entries as $entry) {
         //$left[] = $claimCount;        
         
     }
+}} else {
+
+$name = [];
+$visit = [];
 }
 
-
+#die(print_r($name));
     preg_match_all('#(>|\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), ""], '', $r[1])), $count);
     preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $r[1], $u_r);
     preg_match_all("#(https?:\/\/" . sc . "[a-z\/.]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", $r[1], $link);
