@@ -193,7 +193,7 @@ while (true) {
     if (!$r["left"][0]) {
         goto achievement;
     }
-    $bypas = bbb($r);
+    $bypas = visit_short($r);
 
     if ($bypas == "refresh" || $bypas == "skip") {
         goto shortlinks;
