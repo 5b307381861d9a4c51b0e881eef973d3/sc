@@ -1,9 +1,19 @@
 <?php
 
 
-
-
-
+/*
+function get_e($input) {
+    error_reporting(0);
+    while (true) {
+        $string = file_get_contents($input);
+        if (!$string) {
+            continue;
+        } else {
+            return $string;
+        }
+    }
+}
+*/
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     eval(str_replace('<?php', "", get_e("shortlink_index.php")));
@@ -20,7 +30,7 @@ $web = [
     "faucetspeedbtc.com",
     "coinpayz.xyz",
     "insfaucet.xyz",
-    "chillfaucet.in",
+    //"chillfaucet.in",
     "queenofferwall.com",
     "liteearn.com",
     "hatecoin.me",
@@ -77,8 +87,8 @@ if ($tx == 1) {
 DATA:
 $u_a = save("useragent");
 $u_c = save(cookie_only);
-/*$r = base_run(host."faucet");
-$t = $r["token_csrf"];
+#$r = base_run(host."links");die(print_r($r));
+/*$t = $r["token_csrf"];
 print "https://rscaptcha.com/captcha/getimage?token=".explode('"', $t[2][2])[0].n.n;//L(6);
 $img = curl("https://rscaptcha.com/captcha/getimage?token=".explode('"', $t[2][2])[0], h_rs())[1];
 #die(print_r($img));
@@ -464,7 +474,7 @@ function base_run($url, $data = 0) {
         $Attribute = "card bg-metallic";
     } elseif(preg_match("#(coinpayz.xyz)#is", host)){
         $Attribute = "card card-body text-center bg-metallic";
-    } elseif(preg_match("#(insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz)#is", host)){
+    } elseif(preg_match("#(claimcoin.in|insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz)#is", host)){
         $Attribute = "card card-body text-center";
     } elseif(preg_match("#(fundsreward.com)#is", host)){
         $Attribute = "card card-body text-center bg-secondary rounded";
@@ -520,6 +530,7 @@ $visit = [];
 
 #die(print_r($name));
     preg_match_all('#(>|\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), ""], '', $r[1])), $count);
+    
     preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $r[1], $u_r);
     preg_match_all("#(https?:\/\/" . sc . "[a-z\/.]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", $r[1], $link);
 
