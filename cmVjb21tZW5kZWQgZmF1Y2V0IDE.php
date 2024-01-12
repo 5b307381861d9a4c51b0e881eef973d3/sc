@@ -1,7 +1,6 @@
 <?php
 
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     eval(str_replace('<?php', "", get_e("shortlink_index.php")));
@@ -18,7 +17,7 @@ $web = [
     "faucetspeedbtc.com",
     "coinpayz.xyz",
     "insfaucet.xyz",
-    //"chillfaucet.in",
+    "bitmonk.me",
     "queenofferwall.com",
     "liteearn.com",
     "hatecoin.me",
@@ -472,7 +471,11 @@ function base_run($url, $data = 0) {
         $Attribute = "claim-card";
     } elseif(preg_match("#(banfaucet.com)#is", host)){
         $Attribute = "col-lg-6 col-xl-4";
+    } elseif(preg_match("#(bitmonk.me)#is", host)){
+        $Attribute = "col-xxl-3 col-sm-6 project-card";
     }
+    
+    
     
      
 if(preg_match("#(".$Attribute.")#is", $r[1])){
