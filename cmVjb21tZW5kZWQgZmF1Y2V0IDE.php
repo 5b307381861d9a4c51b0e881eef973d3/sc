@@ -1,19 +1,7 @@
 <?php
 
 
-/*
-function get_e($input) {
-    error_reporting(0);
-    while (true) {
-        $string = file_get_contents($input);
-        if (!$string) {
-            continue;
-        } else {
-            return $string;
-        }
-    }
-}
-*/
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     eval(str_replace('<?php', "", get_e("shortlink_index.php")));
@@ -495,12 +483,13 @@ if(preg_match("#(".$Attribute.")#is", $r[1])){
 foreach ($entries as $entry) {
     $classAttribute = $entry->getAttribute('class');
     if (strpos($classAttribute, $Attribute) !== false) {# || strpos($classAttribute, 'card bg-metallic') !== false || strpos($classAttribute, 'col-12 col-md-6 col-xl-4') !== false || strpos($classAttribute, 'col-lg-3') !== false || strpos($classAttribute, '') !== false) {
-    
+        
+        $titleNodeH2 = $entry->getElementsByTagName('h2')->item(0);
         $titleNodeH3 = $entry->getElementsByTagName('h3')->item(0);
         $titleNodeH4 = $entry->getElementsByTagName('h4')->item(0);
         $titleNodeH5 = $entry->getElementsByTagName('h5')->item(0);
         $titleNodeH6 = $entry->getElementsByTagName('h6')->item(0);
-        $name[] = $titleNodeH3 ? $titleNodeH3->nodeValue : ($titleNodeH4 ? $titleNodeH4->nodeValue : ($titleNodeH5 ? $titleNodeH5->nodeValue : ($titleNodeH6 ? $titleNodeH6->nodeValue : '')));
+        $name[] = $titleNodeH2 ? $titleNodeH2->nodeValue : ($titleNodeH3 ? $titleNodeH3->nodeValue : ($titleNodeH4 ? $titleNodeH4->nodeValue : ($titleNodeH5 ? $titleNodeH5->nodeValue : ($titleNodeH6 ? $titleNodeH6->nodeValue : ''))));
 
         $aTag = $entry->getElementsByTagName('a');
         if ($aTag->length > 0) {
@@ -533,7 +522,9 @@ $visit = [];
     
     preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $r[1], $u_r);
     preg_match_all("#(https?:\/\/" . sc . "[a-z\/.]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", $r[1], $link);
-
+    if(preg_match("#(kiddyearner.com)#is", host)){
+        $r[1] = str_replace("Swal.fire", "memek", $r[1]);
+    }
     preg_match("#(alert-borderless'>|Swal.fire|swal[(])(.*?)(<)#is", $r[1], $n);
     preg_match_all('#(title|text|icon):(.*?)(,|\n})#is', $r[1], $nn);
 
