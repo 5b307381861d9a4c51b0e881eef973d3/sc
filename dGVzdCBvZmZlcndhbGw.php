@@ -108,7 +108,7 @@ while(true){
       "action" => "proccess_game",
       "token" => $r["data"][0],
       ]);print($data);
-    L(30); 
+    L(40); 
     $r1 = base_offer($lg, $data, 1);
     die(print_r($r1));
   } else {
