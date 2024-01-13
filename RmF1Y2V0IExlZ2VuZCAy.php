@@ -28,12 +28,16 @@ if (!$host) {
 
 eval(str_replace('name_host', explode(".", $host)[0], str_replace('example', $host, 'const host="https://example/",sc="name_host",cookie_only="cookie_example";')));
 
+#$r = json_decode(file_get_contents("response_body.json"));
+
+
 DATA:
 $u_a = save("useragent");
 $u_c = save(cookie_only);
 
 
 $r = base_run(host . "infos/dashboard_info",1);
+#die(print_r($r));
 c() . asci(sc).ket("email", $r["json"]->user->email);
 ket("balance", $r["json"]->user->coins, "points", $r["json"]->user->activity_points);
 line();
@@ -70,10 +74,7 @@ while (true) {
     }
 
     $r1 = base_run($bypass["link"]);
-
-    if ($r1["notif"]) {
-        print h . $r1["notif"];
-        r();
+    if ($bypass["reward"] || $r1["status"] == 200) {
         $r3 = base_run(host . "infos/dashboard_info", 1);
         
         if ($r3["status"] == 403) {
@@ -220,7 +221,7 @@ function h_tk($json = 0) {
        $header[] = 'content-type: application/json';
     }
     $header[] = 'user-agent: '.$u_a;
-    $header[] = 'referer: '.host;
+    //$header[] = 'referer: '.host;
     $header[] = 'cookie: '.$u_c;
     return $header;
 }
@@ -238,8 +239,9 @@ function bypass_shortlinks_tokenmix($r) {
     if (!$sls[1]->name) {
         return "refresh";
     }
-
-    for ($i = 0; $i < count($sls); $i++) {
+    $count = count($config) + count($sls);
+    
+    for ($i = 0; $i < $count; $i++) {
         $views = $sls[$i]->views24Hours;
         $_id = $sls[$i]->_id;
         $name = remove_emoji($sls[$i]->name);
@@ -247,13 +249,13 @@ function bypass_shortlinks_tokenmix($r) {
         $completed = $sls[$i]->completed;
         $reset[] = $completed->reset_in;
 
-        for ($s = 0; $s < count($control); $s++) {
-          if (trimed(strtolower($name)) == trimed(strtolower($control[$s])) || $completed->times >= $views) {
+        for ($s = 0; $s < $count; $s++) {
+          if (trimed(strtolower($name)) == trimed(strtolower($control[$s])) || $completed->times == $views) {
               goto next;
           }
         }
         
-        for ($z = 0; $z < count($config); $z++) {
+        for ($z = 0; $z < $count; $z++) {
           if (trimed(strtolower($name)) == trimed(strtolower($config[$z]))) {
              goto upload;
           }
@@ -280,7 +282,7 @@ function bypass_shortlinks_tokenmix($r) {
 
             if (preg_match("#(http)#is", $bypass_shortlinks)) {
                 return [
-                    "link" => str_replace("http:", "https:", $bypass_shortlinks),
+                    "link" => $bypass_shortlinks,
                     "reward" => $reward
                 ];
             }
