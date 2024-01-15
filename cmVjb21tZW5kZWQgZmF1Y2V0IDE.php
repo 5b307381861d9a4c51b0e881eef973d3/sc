@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     eval(str_replace('<?php', "", get_e("shortlink_index.php")));
@@ -44,6 +45,7 @@ $web = [
     "888satoshis.com",
     "earnfreebtc.io",
     "bambit.xyz",
+    "whoopyrewards.com",
     #"feyorra.site",
     "kiddyearner.com",
     "banfaucet.com",
@@ -235,7 +237,7 @@ for ($i = 0; $i < count($dark[0]); $i++) {
             continue;
         } elseif ($bypas == "refresh") {
             print m . "invalid bypass" . n;
-            continue;
+            goto dark;
         } elseif (!$bypas) {
             goto achievement;
         }
@@ -461,7 +463,7 @@ function base_run($url, $data = 0) {
         $Attribute = "card bg-metallic";
     } elseif(preg_match("#(coinpayz.xyz)#is", host)){
         $Attribute = "card card-body text-center bg-metallic";
-    } elseif(preg_match("#(claimcoin.in|insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz)#is", host)){
+    } elseif(preg_match("#(claimcoin.in|insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz|whoopyrewards.com)#is", host)){
         $Attribute = "card card-body text-center";
     } elseif(preg_match("#(fundsreward.com)#is", host)){
         $Attribute = "card card-body text-center bg-secondary rounded";
