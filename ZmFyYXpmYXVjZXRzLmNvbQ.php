@@ -1,7 +1,6 @@
 <?php
 
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     eval(str_replace('<?php', "", get_e("shortlink_index.php")));
@@ -17,12 +16,12 @@ $u_a = save("useragent");
 $bearer = save(bearer_only);
 
 $r = base_run(host . "api/pages/dashboard", "{}", 1);
-
+#die(print_r($r));
 if ($r["status"] == 403) {
     print m . sc . " cloudflare!" . n;
     unlink(cookie_only);
     goto DATA;
-} elseif ($r["json"]->msg == "Your session is expired ! Please Login Again") {
+} elseif ($r["login"]) {
     print m . sc . $r["json"]->msg . n;
     unlink(bearer_only);
     goto DATA;
@@ -40,7 +39,7 @@ while (true) {
         print m . sc . " cloudflare!" . n;
         unlink(cookie_only);
         goto DATA;
-    } elseif ($r["json"]->msg == "Your session is expired ! Please Login Again") {
+    } elseif ($r["login"]) {
         print m . sc . $r["json"]->msg . n;
         unlink(bearer_only);
         goto DATA;
@@ -78,13 +77,14 @@ function base_run($url, $data = 0, $json = 0) {
     #$r[1] = file_get_contents("bitmun.html");
     #die(file_put_contents("asu.html",$r[1]));
     
-    preg_match("#(please login again)#is", $r[1], $login);
+    preg_match("#(please login)#is", $r[1], $login);
     
 
     return [
         "status" => $r[0][1]["http_code"],
         "res" => $r[1],
         "json" => $r[2],
+        "login" => $login[0]
     ];
 }
 
