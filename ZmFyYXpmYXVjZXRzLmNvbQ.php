@@ -49,7 +49,7 @@ while (true) {
     if ($bypass == "refresh") {
         continue;
     } elseif ($bypass["end"] == 1) {
-        tmr(2, min($bypass["reset"]));
+        tmr(2, max($bypass["reset"]));
         continue;
     }
     base_run($bypass["link"]);
