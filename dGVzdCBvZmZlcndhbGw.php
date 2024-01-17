@@ -56,13 +56,14 @@ while(true){
       "token" => $r["data"][0],
       "action" => "switch_cat"
       ]);
-      $t = time()+60;
+      
       $r1 = base_offer($url, $data, 1);#die(print_r($r1));
       $data_token = array(
         "sid" => $user,
         "key" => $key,
         "token" => $r["data"][0]
       );
+      $t = time()+90;
       $bypass = visit_short($r1, $url, $data_token);
       if($bypass == "refresh" || $bypass == "skip"){
         goto offerwall;
