@@ -54,7 +54,6 @@ while (true) {
     if ($bypass == "refresh") {
         continue;
     } elseif ($bypass["end"] == 1) {
-        die("tunggu updatenya tolol udah kafir nyusahin loe kontol".n);
         tmr(2, time() - $bypass["reset"]);
         continue;
     }
