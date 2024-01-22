@@ -57,6 +57,9 @@ while (true) {
         tmr(2, time() - $bypass["reset"]);
         continue;
     }
+    if (strpos($bypass["link"], "http") === false) {
+      continue;
+    }
     base_run($bypass["link"]);
     $data = json_encode(["secret" => $bypass["id"]]);
     $r1 = base_run(host . "api/link/verify", $data, 1)["json"];
