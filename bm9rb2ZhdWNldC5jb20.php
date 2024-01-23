@@ -2,8 +2,6 @@
 
 
 
-
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -26,7 +24,7 @@ if (!$eval) {
 
 eval(str_replace('name_host', explode(".", 'nokofaucet.com')[0], str_replace('example', 'api.nokofaucet.com', 'const host="https://example/",sc="name_host",bearer_only="bearer_example";')));
 
-#$r = json_decode(file_get_contents("vie.html"));die(bypass_shortlinks_vie($r));
+#$r = json_decode(file_get_contents("vie.html"));die(bypass_shortlinks_noko($r));
 #die(print_r($r));
 DATA:
 $u_a = save("useragent");
@@ -53,7 +51,7 @@ while (true) {
         unlink(bearer_only);
         goto DATA;
     }
-    $bypass = bypass_shortlinks_vie($r["json"]);
+    $bypass = bypass_shortlinks_noko($r["json"]);
     
     if ($bypass == "refresh") {
         continue;
@@ -85,7 +83,7 @@ while (true) {
 
 
 function base_run($url, $data = 0, $json = 0) {
-    $header = h_vie($json);
+    $header = h_noko($json);
     $r = curl($url, $header, $data, true, false);
     unset($header);
     #$r[1] = file_get_contents("bitmun.html");
@@ -107,7 +105,7 @@ function base_run($url, $data = 0, $json = 0) {
 
 
 
-function bypass_shortlinks_vie($r) {
+function bypass_shortlinks_noko($r) {
     $file_name = "control";
     $control = file($file_name);
     
@@ -132,20 +130,20 @@ function bypass_shortlinks_vie($r) {
         
         for ($s = 0; $s < $count; $s++) {
         
-            if (trimed(strtolower($title)) == trimed(strtolower($control[$s]))) {
-                $claim = strtotime($updatedAt);
-                
-                if ($claim >= 10) {
-                    $times[] = $claim;
-                }
-                
-                if ($remain_view == 0) {
-                    goto next;
-                }
+            if (trimed(strtolower($title)) == trimed(strtolower($control[$s]))) {                
                 goto next;
             }
           
             if (trimed(strtolower($title)) == trimed(strtolower($config[$s]))) {
+            
+                if ($remain_view == 0) {
+                $claim = strtotime($updatedAt);
+                                
+                    if ($claim >= 10) {
+                        $times[] = $claim;
+                    }
+                    goto next;
+                }
                 goto upload;
             }
         }
@@ -188,7 +186,7 @@ function bypass_shortlinks_vie($r) {
 
 
 
-function h_vie($json = 0) {
+function h_noko($json = 0) {
     global $u_a, $bearer;
 
     $header[] = 'user-agent: '.$u_a;
