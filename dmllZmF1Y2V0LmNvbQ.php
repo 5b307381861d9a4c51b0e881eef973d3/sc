@@ -78,7 +78,7 @@ while (true) {
         line();
         
     }
-    L(5);
+    L(rand(10, 15));
 }
 
 
