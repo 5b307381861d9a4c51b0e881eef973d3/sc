@@ -2,6 +2,9 @@
 
 
 
+#print file_put_contents("vie.avg", base64_decode("U2FsdGVkX18NOM85Pg7WBFoy7l6IgtEAk5shtMQKv1SkjI0gLfYcCa+krfee/ZWoDE9gI9EB6lwXg5pUaGMm4yH8h5vkAXjLZaROEe8Ibo94bRtjBMbzUipQVutPEupJCqcyZaX134wWpEC30YgDbA=="));exit;
+
+
 
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
@@ -24,13 +27,16 @@ if (!$eval) {
 
 
 eval(str_replace('name_host', explode(".", 'nokofaucet.com')[0], str_replace('example', 'api.nokofaucet.com', 'const host="https://example/",sc="name_host",bearer_only="bearer_example";')));
-
+/*
+$r = json_decode(file_get_contents("vie.html"));
+file_put_contents("vie.png", base64_decode($r->image));
+die(print_r($r));*/
 DATA:
 $u_a = save("useragent");
 $bearer = save(bearer_only);
 
 $r = base_run(host . "api/auth/me", 0, 1);
-
+#die(print_r($r));
 if ($r["status"] >= 201) {
     print m . $r["json"]->message . n;
     unlink(bearer_only);
@@ -41,7 +47,7 @@ c() . asci(sc).ket("username", $r["json"]->username);
 ket("balance", $r["json"]->balance);
 line();
 print n;
-
+#exit;
 while (true) {
     $r = base_run(host . "api/shortlink/getPagnigation?keyword=&page=1&perPage=40&sortDate=undefined&sortBy=undefined&paginationVersion=2", 0, 1);
     
@@ -151,8 +157,8 @@ function bypass_shortlinks_noko($r) {
         "end" => 1,
         "reset" => min($times)
     ];
-    
     upload:
+    #die(print_r($title));
     $js = base_run(host . "api/shortlink/generate/".$id, 0, 1)["json"];
     
     if ($js->url) {
