@@ -55,7 +55,7 @@ while (true) {
     
     if ($bypass == "refresh") {
         continue;
-    } elseif ($bypass["end"] == 1) {die(m."you are banned".n);
+    } elseif ($bypass["end"] == 1) {
         tmr(2, time() - $bypass["reset"]);
         continue;
     }
