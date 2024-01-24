@@ -2,6 +2,7 @@
 
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -24,14 +25,12 @@ if (!$eval) {
 
 eval(str_replace('name_host', explode(".", 'nokofaucet.com')[0], str_replace('example', 'api.nokofaucet.com', 'const host="https://example/",sc="name_host",bearer_only="bearer_example";')));
 
-#$r = json_decode(file_get_contents("vie.html"));die(bypass_shortlinks_noko($r));
-#die(print_r($r));
 DATA:
 $u_a = save("useragent");
 $bearer = save(bearer_only);
 
 $r = base_run(host . "api/auth/me", 0, 1);
-#die(print_r($r));
+
 if ($r["status"] >= 201) {
     print m . $r["json"]->message . n;
     unlink(bearer_only);
@@ -42,7 +41,7 @@ c() . asci(sc).ket("username", $r["json"]->username);
 ket("balance", $r["json"]->balance);
 line();
 print n;
-#exit;
+
 while (true) {
     $r = base_run(host . "api/shortlink/getPagnigation?keyword=&page=1&perPage=40&sortDate=undefined&sortBy=undefined&paginationVersion=2", 0, 1);
     
@@ -56,7 +55,7 @@ while (true) {
     if ($bypass == "refresh") {
         continue;
     } elseif ($bypass["end"] == 1) {
-        tmr(2, time() - $bypass["reset"]);
+        tmr(2, $bypass["reset"]);
         continue;
     }
     base_run($bypass["link"]);
@@ -75,7 +74,6 @@ while (true) {
         }
         ket("balance", $r["json"]->balance);
         line();
-        
     }
     L(rand(10, 15));
 }
@@ -113,13 +111,12 @@ function bypass_shortlinks_noko($r) {
     if (!$control[0]) {
         $control = ["tolol"];
     }
-    $config = config();
-
-    $data = $r->data;
-    #die(print_r($data));
-    if (!$data[1]->_id) {
+    $config = arr_rand(config());
+    
+    if (!$r->data[1]->_id) {
         return "refresh";
     }
+    $data = arr_rand($r->data);
     $count = count($config) + count($data);
 
     for ($i = 0; $i < $count; $i++) {
@@ -138,7 +135,7 @@ function bypass_shortlinks_noko($r) {
             if (trimed(strtolower($title)) == trimed(strtolower($config[$s]))) {
             
                 if ($remain_view == 0) {
-                $claim = strtotime($updatedAt);
+                    $claim = strtotime($updatedAt);
                                 
                     if ($claim >= 10) {
                         $times[] = $claim;
@@ -152,10 +149,10 @@ function bypass_shortlinks_noko($r) {
     }
     return [
         "end" => 1,
-        "reset" => date(min($times), strtotime("tomorrow"))
+        "reset" => min($times)
     ];
+    
     upload:
-    #die(print_r($title));
     $js = base_run(host . "api/shortlink/generate/".$id, 0, 1)["json"];
     
     if ($js->url) {
