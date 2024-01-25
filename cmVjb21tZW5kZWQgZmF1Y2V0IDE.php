@@ -41,7 +41,6 @@ $web = [
     "bitupdate.info",
     "newzcrypt.xyz",
     "hfaucet.com",
-    "mezo.live",
     "claimcash.cc",
     "cashbux.work",
     "claimbitco.in",
@@ -59,7 +58,7 @@ $web = [
     "earnfreebtc.io",
     "bambit.xyz",
     "whoopyrewards.com",
-    #"feyorra.site",
+    "feyorra.site",
     "kiddyearner.com",
     "free-ltc-info.com",
     "banfaucet.com",
@@ -220,7 +219,7 @@ while (true) {
         L(25);
     }
     $r1 = base_run($bypas);
-    
+    #die(print_r($r1));
     
     if (preg_match("#(good|suc|been)#is", $r1["notif"]) == true) {
         text_line(h . $r1["notif"]);
@@ -295,7 +294,9 @@ for ($i = 0; $i <= count($link); $i++) {
         break;
     }
 }
-
+if (preg_match("#(free-ltc-info.com|bitmonk.com)#is", host)) {
+    goto auto;
+}
 if (!$achievements) {
     lah(2, $redirect);
     L(5);
@@ -477,7 +478,7 @@ function base_run($url, $data = 0) {
     preg_match('#h-captcha" data-sitekey="(.*?)"#is', $r[1], $hcaptcha);
     preg_match('#grecaptcha.execute"(.*?)"#is', str_replace("(", "", $r[1]), $recaptchav3);
     preg_match('#(class="font-medium">|class="m-b-0"><strong>|class="d-none d-lg-inline-flex">|class="fa-solid fa-user-graduate me-2"></i>|class="text-primary"><p>|user-name-text">|fw-semibold">|key="t-henry">|class="font-size-15 text-truncate">)(.*?)(<)#is', str_replace(["#", 'flex">Notifications'], "", $r[1]), $username);
-    preg_match_all('#(<h5 >|<h5 class="font-15">|<h6>|class="text-muted font-weight-normal mb-0 w-100 text-truncate">|class="mb-2">|class="text-muted font-weight-medium">|class="">|class="text-muted mb-2">)(.*?)<(.*?)>([a-zA-Z0-9-, .]*)<#is', str_replace(["'", "Account"], "", $r[1]), $bal);
+    preg_match_all('#(<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<h5 >|<h5 class="font-15">|<h6>|class="text-muted font-weight-normal mb-0 w-100 text-truncate">|class="mb-2">|class="text-muted font-weight-medium">|class="">|class="text-muted mb-2">)(.*?)<(.*?)>([a-zA-Z0-9-, .]*)<#is', str_replace(["'", "Account"], "", $r[1]), $bal);
 
     for ($i = 0; $i < 30; $i++) {
         if (trim(strtolower($bal[2][$i])) == "balance") {
@@ -486,7 +487,7 @@ function base_run($url, $data = 0) {
         }
     }
     if (!$balance) {
-        preg_match('#(<div class="text-3xl font-medium leading-8 mt-6">|<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","", $r[1]), $ball);
+        preg_match('#(<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<div class="text-3xl font-medium leading-8 mt-6">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","", $r[1]), $ball);
         $balance = $ball[2];
     }
 
@@ -513,6 +514,8 @@ function base_run($url, $data = 0) {
         $Attribute = "col-xxl-3 col-sm-6 project-card";
     } elseif(preg_match("#(free-ltc-info.com)#is", host)){
         $Attribute = "zoom-in box p-5";
+    } elseif(preg_match("#(feyorra.site)#is", host)){
+        $Attribute = "row flex-grow-1 align-items-center justify-content-between";
     }
     
     
@@ -570,6 +573,13 @@ function base_run($url, $data = 0) {
     if (!$n[2]) {
         $n[2] = $nn[2][0] . $nn[2][1];
     }
+    
+    preg_match('#(`success`|babitolol)(.*?)([)])#is', $r[1], $nnn);
+
+    if (!$n[2]) {
+        $n[2] = $nnn[2];
+    }
+    #toastr[`success`](`0.00003050
 
     preg_match_all("#(https?:\/\/[a-z0-9\/.-]*)(verify|ptc\/view|achievements\/claim*)(\/?[a-z0-9\/-]*)(.*?)#is", $r[1], $redirect);
 
