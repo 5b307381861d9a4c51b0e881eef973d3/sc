@@ -1,10 +1,23 @@
 <?php
 
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
-    eval(str_replace('<?php', "", get_e("shortlink_index.php")));
+    $reques = array(
+        1 => "xevil", 2 => "multibot"
+    );
+    ket(1, "xevil", 2, "multibot");
+    
+    while(true) {
+        $inp = tx("number", 1);
+      
+        if ($inp == 0) {
+            continue;
+        } elseif (2 >= $inp) {
+            break;
+        }
+    }
+    eval(str_replace('<?php',"",str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
 }
 
 
@@ -48,6 +61,7 @@ $web = [
     "whoopyrewards.com",
     #"feyorra.site",
     "kiddyearner.com",
+    "free-ltc-info.com",
     "banfaucet.com",
 ];
 
@@ -206,7 +220,8 @@ while (true) {
         L(25);
     }
     $r1 = base_run($bypas);
-
+    
+    
     if (preg_match("#(good|suc|been)#is", $r1["notif"]) == true) {
         text_line(h . $r1["notif"]);
         if ($r1["balance"]) {
@@ -226,9 +241,20 @@ for ($i = 0; $i < count($dark[0]); $i++) {
             unset($dark[0][$i]);
             continue;
         }
-
+        if (preg_match("#_rsshort.com#is", $r["url"])) {
+            $xxnx = 7;
+        } else {
+            $xxnx = 5;
+        }
+        
         ket("url", $r["url"]) . line();
-        $bypas = bypass_shortlinks($r["url"], 1);
+        
+        for ($h = 0; $h < $xxnx; $h++) {
+            $bypas = bypass_shortlinks($r["url"], 1);
+            if (preg_match("#(refresh|skip)#is", $bypas)) {
+                break;
+            }
+        }
 
         #print_r($dark);
 
@@ -242,10 +268,20 @@ for ($i = 0; $i < count($dark[0]); $i++) {
             goto achievement;
         }
 
-        base_run(str_replace("/back","/verify", $bypas));
+        #base_run(str_replace("/back","/verify", $bypas));
+        base_run($bypas);
+        $r1 = base_run(host . "dashboard");
+        
         print h."oke mantap kafir".n;
+        if (preg_match("#(good|suc|been)#is", $r1["notif"]) == true) {
+            text_line(h . $r1["notif"]);
+            if ($r1["balance"]) {
+                ket("balance", $r1["balance"]);
+            }
+        }
         line();
         goto dark;
+        
     }
 }
 
@@ -420,7 +456,7 @@ while (true) {
 
 function base_run($url, $data = 0) {
     tai:
-    $header = h_x();
+    $header = head();
     $r = curl($url, $header, $data, true, false);
     /*if (!$r[1]) {
        print p ."loss page!";
@@ -436,11 +472,11 @@ function base_run($url, $data = 0) {
     preg_match("#(antibotlink)#is", $r[1], $antb);
     preg_match("#(Protecting faucet|Daily limit reached|for Auto Faucet)#is", $r[1], $limit);
     preg_match("#firewall#is", $r[1], $firewall);
-    preg_match("#(Failed to generate this link|Invalid Keys)#is", $r[1], $failed);
+    preg_match("#(Failed to generate this link|Invalid Keys|Clear the browser cache and cookies.Disable any ad blocker.No proxy)#is", str_replace("scription INVA", "", $r[1]), $failed);
     preg_match('#"g-recaptcha" data-sitekey="(.*?)"#is', $r[1], $recaptchav2);
     preg_match('#h-captcha" data-sitekey="(.*?)"#is', $r[1], $hcaptcha);
     preg_match('#grecaptcha.execute"(.*?)"#is', str_replace("(", "", $r[1]), $recaptchav3);
-    preg_match('#(class="m-b-0"><strong>|class="d-none d-lg-inline-flex">|class="fa-solid fa-user-graduate me-2"></i>|class="text-primary"><p>|user-name-text">|fw-semibold">|key="t-henry">|class="font-size-15 text-truncate">)(.*?)(<)#is', str_replace(["#", 'flex">Notifications'], "", $r[1]), $username);
+    preg_match('#(class="font-medium">|class="m-b-0"><strong>|class="d-none d-lg-inline-flex">|class="fa-solid fa-user-graduate me-2"></i>|class="text-primary"><p>|user-name-text">|fw-semibold">|key="t-henry">|class="font-size-15 text-truncate">)(.*?)(<)#is', str_replace(["#", 'flex">Notifications'], "", $r[1]), $username);
     preg_match_all('#(<h5 >|<h5 class="font-15">|<h6>|class="text-muted font-weight-normal mb-0 w-100 text-truncate">|class="mb-2">|class="text-muted font-weight-medium">|class="">|class="text-muted mb-2">)(.*?)<(.*?)>([a-zA-Z0-9-, .]*)<#is', str_replace(["'", "Account"], "", $r[1]), $bal);
 
     for ($i = 0; $i < 30; $i++) {
@@ -450,7 +486,7 @@ function base_run($url, $data = 0) {
         }
     }
     if (!$balance) {
-        preg_match('#(<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","", $r[1]), $ball);
+        preg_match('#(<div class="text-3xl font-medium leading-8 mt-6">|<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","", $r[1]), $ball);
         $balance = $ball[2];
     }
 
@@ -475,58 +511,56 @@ function base_run($url, $data = 0) {
         $Attribute = "col-lg-6 col-xl-4";
     } elseif(preg_match("#(bitmonk.me)#is", host)){
         $Attribute = "col-xxl-3 col-sm-6 project-card";
+    } elseif(preg_match("#(free-ltc-info.com)#is", host)){
+        $Attribute = "zoom-in box p-5";
     }
     
     
     
-     
-if(preg_match("#(".$Attribute.")#is", $r[1])){
-    $dom = new DOMDocument;
-    $dom->loadHTML(str_replace('Remaining', '', $r[1]));
-    $entries = $dom->getElementsByTagName('div');
-
-foreach ($entries as $entry) {
-    $classAttribute = $entry->getAttribute('class');
-    if (strpos($classAttribute, $Attribute) !== false) {# || strpos($classAttribute, 'card bg-metallic') !== false || strpos($classAttribute, 'col-12 col-md-6 col-xl-4') !== false || strpos($classAttribute, 'col-lg-3') !== false || strpos($classAttribute, '') !== false) {
+    
+    if(preg_match("#(".$Attribute.")#is", $r[1])){
+        $dom = new DOMDocument;
+        $dom->loadHTML(str_replace('Remaining', '', $r[1]));
+        $entries = $dom->getElementsByTagName('div');
         
-        $titleNodeH2 = $entry->getElementsByTagName('h2')->item(0);
-        $titleNodeH3 = $entry->getElementsByTagName('h3')->item(0);
-        $titleNodeH4 = $entry->getElementsByTagName('h4')->item(0);
-        $titleNodeH5 = $entry->getElementsByTagName('h5')->item(0);
-        $titleNodeH6 = $entry->getElementsByTagName('h6')->item(0);
-        $name[] = $titleNodeH2 ? $titleNodeH2->nodeValue : ($titleNodeH3 ? $titleNodeH3->nodeValue : ($titleNodeH4 ? $titleNodeH4->nodeValue : ($titleNodeH5 ? $titleNodeH5->nodeValue : ($titleNodeH6 ? $titleNodeH6->nodeValue : ''))));
-
-        $aTag = $entry->getElementsByTagName('a');
-        if ($aTag->length > 0) {
-            $claimLink = $aTag->item(0)->getAttribute('href');
-            $claimCountNode = $aTag->item(0)->getElementsByTagName('span')->item(0);
-        } else {
-            $buttonTag = $entry->getElementsByTagName('button');
-            if ($buttonTag->length > 0) {
-                $claimCountNode = $buttonTag->item(0)->getElementsByTagName('span')->item(0);
+        foreach ($entries as $entry) {
+            $classAttribute = $entry->getAttribute('class');
+            if (strpos($classAttribute, $Attribute) !== false) {
+                $titleNodeH2 = $entry->getElementsByTagName('h2')->item(0);
+                $titleNodeH3 = $entry->getElementsByTagName('h3')->item(0);
+                $titleNodeH4 = $entry->getElementsByTagName('h4')->item(0);
+                $titleNodeH5 = $entry->getElementsByTagName('h5')->item(0);
+                $titleNodeH6 = $entry->getElementsByTagName('h6')->item(0);
+                $name[] = $titleNodeH2 ? $titleNodeH2->nodeValue : ($titleNodeH3 ? $titleNodeH3->nodeValue : ($titleNodeH4 ? $titleNodeH4->nodeValue : ($titleNodeH5 ? $titleNodeH5->nodeValue : ($titleNodeH6 ? $titleNodeH6->nodeValue : ''))));
+                $aTag = $entry->getElementsByTagName('a');
+                
+                if ($aTag->length > 0) {
+                    $claimLink = $aTag->item(0)->getAttribute('href');
+                    $claimCountNode = $aTag->item(0)->getElementsByTagName('span')->item(0);
+                } else {
+                    $buttonTag = $entry->getElementsByTagName('button');
+                    
+                    if ($buttonTag->length > 0) {
+                        $claimCountNode = $buttonTag->item(0)->getElementsByTagName('span')->item(0);
+                    }
+                }
+                
+                if(!$claimCountNode){
+                    $claimCountNode = $entry->getElementsByTagName('p')->item(0);
+                }
+                $claimCount = $claimCountNode ? trim($claimCountNode->nodeValue) : '';
+                $visit[] = $claimLink;
+                //$left[] = $claimCount;        
             }
         }
-        if(!$claimCountNode){
-            $claimCountNode = $entry->getElementsByTagName('p')->item(0);
-        };
-        
-        
-        $claimCount = $claimCountNode ? trim($claimCountNode->nodeValue) : '';
-        $visit[] = $claimLink;
-        //$left[] = $claimCount;        
-        
-    }
-}} else {
-
-$name = [];
-$visit = [];
-}
-
-#die(print_r($name));
-    preg_match_all('#(>|\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), ""], '', $r[1])), $count);
+   } else {
+       $name = [];
+       $visit = [];
+   }
+    preg_match_all('#(>|\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), "Available View:"], '', $r[1])), $count);
     
     preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $r[1], $u_r);
-    preg_match_all("#(https?:\/\/" . sc . "[a-z\/.]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", $r[1], $link);
+    preg_match_all("#(https?:\/\/" . sc . "[a-z\/.-]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", $r[1], $link);
     if(preg_match("#(kiddyearner.com)#is", host)){
         $r[1] = str_replace("Swal.fire", "memek", $r[1]);
     }
@@ -537,11 +571,12 @@ $visit = [];
         $n[2] = $nn[2][0] . $nn[2][1];
     }
 
-    preg_match_all("#(https?:\/\/[a-z0-9\/.]*)(verify|ptc\/view|achievements\/claim*)(\/?[a-z0-9\/]*)(.*?)#is", $r[1], $redirect);
+    preg_match_all("#(https?:\/\/[a-z0-9\/.-]*)(verify|ptc\/view|achievements\/claim*)(\/?[a-z0-9\/-]*)(.*?)#is", $r[1], $redirect);
 
     return [
         "status" => $r[0][1]["http_code"],
         "res" => $r[1],
+        "r" => $r[0][2],
         "register" => $register[1],
         "antb" => $antb[1],
         "cookie" => set_cookie($r[0][2]),
@@ -563,6 +598,7 @@ $visit = [];
         "url" => $u_r[0],
         "link" => array_merge(array_unique($link[0])),
         "url1" => $r[0][0]["location"],
+        "url2" => $r[0][1]["url"],
         "failed" => $failed[1],
         "redirect" => $redirect[0],
     ];
@@ -597,9 +633,4 @@ $header[] = 'referer: https://claimtrx.com/';
 $header[] = 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7';
     return $header;
 }
-
-
-
-
-
 
