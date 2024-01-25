@@ -1,7 +1,6 @@
 <?php
 
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -295,7 +294,7 @@ for ($i = 0; $i <= count($link); $i++) {
         break;
     }
 }
-if (preg_match("#(free-ltc-info.com|bitmonk.com)#is", host)) {
+if (preg_match("#(free-ltc-info.com|bitmonk.me)#is", host)) {
     goto auto;
 }
 if (!$achievements) {
@@ -416,22 +415,33 @@ while (true) {
 
 firewall:
 while (true) {
-    die("firewall butuh update sc");
+    #die("firewall butuh update sc");
     $r = base_run(host . "firewall");
 
-    if ($link[$host]["type"] == $r["token_csrf"][2][0]) {
+    $t = $r["token_csrf"];
+    
+    if ($t[2][1]) {
+    
+        for ($i = 0; $i <= count($t[1]); $i++) {
+        
+            if (preg_match("#(hcaptcha|recaptchav2|recaptchav3)#is", $t[2][$i])) {
+                $methode = $t[2][$i];
+                break;
+            }
+        }
+        
+        if (!$methode) {
+            goto firewall;
+        }
         fire:
-        eval(str_replace("request_captcha(", $methode[$request_captcha] . "(", '$cap = request_captcha($link[$host]["type"], $r[$link[$host]["type"]], host . "firewall");'));
-
+        eval(str_replace("request_captcha",  $reques[$inp], '$cap = request_captcha($methode, $r[methode], host);'));
+        
         if (!$cap) {
             goto fire;
         }
+        $rsp = ["g-recaptcha-response" => $cap];
 
-        $data = http_build_query([
-            "g-recaptcha-response" => $cap,
-            $r["token_csrf"][1][0] => $r["token_csrf"][2][0],
-            $r["token_csrf"][1][1] => $r["token_csrf"][2][1]
-        ]);
+        $data = data_post($t, "two", $rsp);
 
         $r1 = base_run($r["redirect"][0], $data);
 
@@ -582,7 +592,7 @@ function base_run($url, $data = 0) {
     }
     #toastr[`success`](`0.00003050
 
-    preg_match_all("#(https?:\/\/[a-z0-9\/.-]*)(verify|ptc\/view|achievements\/claim*)(\/?[a-z0-9\/-]*)(.*?)#is", $r[1], $redirect);
+    preg_match_all("#(https?:\/\/[a-z0-9\/.-]*)(verify|ptc\/view|achievements\/claim|firewall*)(\/?[a-z0-9\/-]*)(.*?)#is", $r[1], $redirect);
 
     return [
         "status" => $r[0][1]["http_code"],
