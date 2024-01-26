@@ -1,10 +1,46 @@
 <?php
+/*error_reporting(0);
 
 
-if($eval == false){
-  eval(str_replace('<?php',"",get_e("build_index.php")));
-  eval(str_replace('<?php',"",get_e("shortlink_index.php")));
+// Load HTML content
+    $r[1] = file_get_contents("instan.html");
+    $dom = new DOMDocument;
+    $dom->loadHTML($r[1]);
+    $linksss = $dom->getElementsByTagName('a');
+    
+    foreach ($linksss as $linkss) {
+        $links = $linkss->getAttribute('href');
+            
+        if (strpos($links, "currency") !== false) {
+            $link[] = $links;
+            $list[] = $linkss->parentNode->parentNode->getElementsByTagName('h2')->item(0)->textContent;
+        }
+    }
+    print_r($link);
+    print_r($list);
+exit;*/
+
+
+
+if (!$eval) {
+    eval(str_replace('<?php', "", get_e("build_index.php")));
+    $reques = array(
+        1 => "xevil", 2 => "multibot"
+    );
+    ket(1, "xevil", 2, "multibot");
+    
+    while(true) {
+        $inp = tx("number", 1);
+      
+        if ($inp == 0) {
+            continue;
+        } elseif (2 >= $inp) {
+            break;
+        }
+    }
+    eval(str_replace('<?php',"",str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
 }
+
 
 go_home:
 c();
@@ -17,6 +53,7 @@ $web = [
   "onlyfaucet.com",
   "claimcoins.net",
   "doge25.in",
+  "chillfaucet.in"
   ];
   
 for($i=0;$i<count($web);$i++){
@@ -97,7 +134,9 @@ if($pil == 1){
 
 links:
 while(true){
-  $r1 = base_run($link);#die(print_r($r1));
+  $r1 = base_run($link);
+  #die(file_put_contents("instan.html",$r["res"]));
+  #die(print_r($r1));
   if($r1["status"] == 403){
   die(m."banned IP please airplane mode for a moment");
   } elseif($r1["login"]){
@@ -148,8 +187,8 @@ function base_run($url, $data = 0){
   $header = ["user-agent: ".user_agent()];
   $r = curl($url,$header,$data,true,cookie_only);
   unset($header);
-  #$r[1] = file_get_contents("response_body.html");
-  #die(file_put_contents("bitmun.html",$r[1]));
+  #$r[1] = file_get_contents("instan.html");
+  #die(file_put_contents("instan.html",$r[1]));
   $json = json_decode(base64_decode($r[1]));
   if(!$json){
     $json = $r[2];
@@ -158,17 +197,30 @@ function base_run($url, $data = 0){
   preg_match("#empty<#is",$r[1],$empty);
   preg_match_all('#<input type="hidden" name="(.*?)" id="token" value="(.*?)">#is',str_replace('name="anti','',$r[1]),$token);
   preg_match_all('#(title|html):(.*?)(,)#is',str_replace("'","",$r[1]),$nn);
-  if(preg_match_all('#<a class="(collapse-item|dropdown-item)" href="(.*?)">(.*?)</a>#is',$r[1],$coin)){
-    for($i = 0;$i<=count($coin[2]);$i++){
-      if(preg_match("#(link)#is",$coin[3][$i])){
-        $links[] = $coin[2][$i];
-        $tl[] = $coin[3][$i];
+  /*if(preg_match_all('#<a class="(collapse-item|dropdown-item)" href="(.*?)">(.*?)</a>#is',$r[1],$coin)){*/
+    $dom = new DOMDocument;
+    $dom->loadHTML($r[1]);
+    $linksss = $dom->getElementsByTagName('a');
+    
+    foreach ($linksss as $linkss) {
+        $links = $linkss->getAttribute('href');
+            
+        if (strpos($links, "currency") !== false) {
+            $link[] = $links;
+            $list[] = $linkss->parentNode->parentNode->getElementsByTagName('h2')->item(0)->textContent;
+        }
+    }
+    if ($list[0]){
+    for($i = 0;$i<=count($link);$i++){
+      if(preg_match("#(link)#is",$link[$i])){
+        $lin[] = $link[$i];
+        $tl[] = $list[$i];
       } else {
-        $faucet[] = $coin[2][$i];
-        $tf[] = $coin[3][$i];
+        $faucet[] = $link[$i];
+        $tf[] = $list[$i];
       }
     }
-    $methode["links"]= [array_filter($tl),array_filter($links)];  
+    $methode["links"]= [array_filter($tl),array_filter($lin)];  
     $methode["faucet"] = [array_filter($tf),array_filter($faucet)];
   } else {
     $methode = [1=>2];
