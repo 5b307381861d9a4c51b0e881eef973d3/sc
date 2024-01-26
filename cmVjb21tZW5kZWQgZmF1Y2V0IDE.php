@@ -433,8 +433,8 @@ while (true) {
         if (!$methode) {
             goto firewall;
         }
-        fire:#$reques[$inp]
-        eval(str_replace("request_captcha", "multibot", '$cap = request_captcha($methode, $r[methode], host);'));
+        fire:
+        $cap = request_captcha($methode, $r[$methode], host);
         
         if (!$cap) {
             goto fire;
