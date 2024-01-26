@@ -135,6 +135,17 @@ if($pil == 1){
 links:
 while(true){
   $r1 = base_run($link);
+  if ($r1["firewall"]) {
+  unlink(cookie_only);
+  print m . "Firewall!";
+    r();
+  $r = base_run(host);
+$t = $r["token"];
+$array = array("wallet" => $email);
+$data = data_post($t, "null", $array);
+$r = base_run(host."auth/login", $data);
+continue;
+  }
   #die(file_put_contents("instan.html",$r["res"]));
   #die(print_r($r1));
   if($r1["status"] == 403){
@@ -229,7 +240,7 @@ function base_run($url, $data = 0){
   preg_match_all('#>(\d+\/+\d+)#is',trimed($r[1]),$left);
   preg_match_all('#class="card-title mt-0">(.*?)<#is',str_replace('mt-0">Your',"",$r[1]),$name);
   #die(print_r($name));
-  
+  preg_match("#firewall#is", $r[1], $firewall);
   
    print p;
    return array_merge([
@@ -242,7 +253,8 @@ function base_run($url, $data = 0){
      "visit" => $visit[0],
      "left" => $left[1],
      "url1" => $r[0][0]["location"],
-     "notif" => $nn[2][0].$nn[2][1]
+     "notif" => $nn[2][0].$nn[2][1],
+     "firewall" => $firewall[0]
      ], $methode);
 }
 
