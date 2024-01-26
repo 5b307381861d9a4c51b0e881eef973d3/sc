@@ -1,25 +1,4 @@
 <?php
-/*error_reporting(0);
-
-
-// Load HTML content
-    $r[1] = file_get_contents("instan.html");
-    $dom = new DOMDocument;
-    $dom->loadHTML($r[1]);
-    $linksss = $dom->getElementsByTagName('a');
-    
-    foreach ($linksss as $linkss) {
-        $links = $linkss->getAttribute('href');
-            
-        if (strpos($links, "currency") !== false) {
-            $link[] = $links;
-            $list[] = $linkss->parentNode->parentNode->getElementsByTagName('h2')->item(0)->textContent;
-        }
-    }
-    print_r($link);
-    print_r($list);
-exit;*/
-
 
 
 if (!$eval) {
@@ -218,7 +197,9 @@ function base_run($url, $data = 0){
             
         if (strpos($links, "currency") !== false) {
             $link[] = $links;
-            $list[] = $linkss->parentNode->parentNode->getElementsByTagName('h2')->item(0)->textContent;
+            $l_name1 = $linkss->parentNode->parentNode->getElementsByTagName('h2')->item(0);
+            #$l_name2 = ;
+            $list[] = $l_name1 ? $l_name1->textContent : ($linkss ? $linkss->nodeValue : '');
         }
     }
     if ($list[0]){
