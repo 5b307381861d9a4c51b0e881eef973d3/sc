@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -33,7 +34,8 @@ $web = [
     "claimcoins.net",
     "doge25.in",
     "chillfaucet.in",
-    "zoomfaucet.com"
+    "zoomfaucet.com",
+    "altcryp.com"
 ];
   
 for ($i = 0; $i < count($web); $i++) {
