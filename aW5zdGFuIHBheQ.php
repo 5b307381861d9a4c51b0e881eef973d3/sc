@@ -1,6 +1,18 @@
 <?php
 
-
+function get_e($input) {
+    error_reporting(0);
+    
+    while (true) {
+        $string = file_get_contents($input);
+        
+        if (!$string) {
+            continue;
+        } else {
+            return $string;
+        }
+    }
+}
 
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
@@ -171,7 +183,7 @@ while(true) {
         continue;
     } 
     
-    if (preg_match("#(suc|sent)#is", $r1["notif"])) {
+    if (preg_match("#(suc|sen|hast)#is", $r1["notif"])) {
         text_line(h.$r1["notif"]);
     } else {
         print m.$r1["notif"];
@@ -208,7 +220,7 @@ function base_run($url, $data = 0) {
     preg_match("#empty<#is", $r[1], $empty);
     preg_match_all('#<input type="hidden" name="(.*?)" id="token" value="(.*?)">#is', str_replace('name="anti', '', $r[1]), $token);
     preg_match_all('#(title|html):(.*?)(,)#is', str_replace("'", "", $r[1]), $nn);
-    preg_match("#(alert-borderless'>|Swal.fire|swal[(])(.*?)(<)#is", str_replace('re("Dis', '', $r[1]), $n);
+    preg_match("#(alert-borderless'>|Swal.fire|swal[(])(.*?)(<)#is", str_replace(['re("Dis', 'fire({'], '', $r[1]), $n);
     preg_match_all('#(title|html):(.*?)(backdrop|,|\n})#is', $r[1], $nn);
 
     if (!$n[2]) {
