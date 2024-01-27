@@ -1,7 +1,6 @@
 <?php
 
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -52,7 +51,7 @@ if (!$host) {
   goto go_home;
 }
 
-if ($host == "onlyfaucet.com" || $host == "claimcoins.net" || $host == "chillfaucet.in" || $host == "zoomfaucet.com") {
+if ($host == "onlyfaucet.com" || $host == "claimcoins.net" || $host == "chillfaucet.in" || $host == "zoomfaucet.com" || $host == "altcryp.com") {
     $cancel = 1;
 }
 
