@@ -63,10 +63,13 @@ re_DATA:
 ket("", "methode", 1, "cookie", 2, "login");
 $mt = tx("number", 1);
 if ($mt == 1) {
+    unlink(cookie_only);
+    r();
     $u_a = save("useragent");
     $cookie = save(cookie_only);
 } elseif ($mt >= 2) {
     print p."wait login!";
+    r();
 } else {
     goto re_DATA;
 }
@@ -93,6 +96,12 @@ r();
       
       
 home:
+
+if($host == "claimcoins.net"){
+  $link = "https://claimcoins.net/links/currency/ltc";
+  goto bn;
+}
+
 for ($i = 0; $i < count($r["links"][0]); $i++) {
     if ($r["links"][0][$i]) {
         ket($i+1, $r["links"][0][$i]);
@@ -149,10 +158,6 @@ while(true) {
             continue;
         }
         lah(2,"shortlinks");
-       
-        if ($host == "claimcoins.net") {
-            exit;
-        }
         goto home;
     }
     $t1 = time();
@@ -188,7 +193,7 @@ function base_run($url, $data = 0) {
     } else {
         $text_cookie_jar = cookie_only;
         $user_agent = user_agent();
-    }#die($text_cookie);
+    }
     $header = ["user-agent: ".$user_agent];
     $r = curl($url, $header, $data, true, $text_cookie_jar, $text_cookie);
     unset($header);
@@ -203,8 +208,8 @@ function base_run($url, $data = 0) {
     preg_match("#empty<#is", $r[1], $empty);
     preg_match_all('#<input type="hidden" name="(.*?)" id="token" value="(.*?)">#is', str_replace('name="anti', '', $r[1]), $token);
     preg_match_all('#(title|html):(.*?)(,)#is', str_replace("'", "", $r[1]), $nn);
-    preg_match("#(alert-borderless'>|Swal.fire|swal[(])(.*?)(<)#is", $r[1], $n);
-    preg_match_all('#(title|html):(.*?)(,|\n})#is', $r[1], $nn);
+    preg_match("#(alert-borderless'>|Swal.fire|swal[(])(.*?)(<)#is", str_replace('re("Dis', '', $r[1]), $n);
+    preg_match_all('#(title|html):(.*?)(backdrop|,|\n})#is', $r[1], $nn);
 
     if (!$n[2]) {
         $n[2] = $nn[2][0] . $nn[2][1];
@@ -233,7 +238,6 @@ function base_run($url, $data = 0) {
    
     for ($i = 0; $i < count($link); $i++) {
       if (preg_match("#(link)#is", $link[$i])) {
-      #if (strpos($links, "link") !== false) {
         $lin[] = $link[$i];
         $tl[] = $list[$i];
       }
