@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -32,7 +33,8 @@ $web = [
     "onlyfaucet.com",
     "claimcoins.net",
     "doge25.in",
-    "chillfaucet.in"
+    "chillfaucet.in",
+    "zoomfaucet.com"
 ];
   
 for ($i = 0; $i < count($web); $i++) {
@@ -49,13 +51,25 @@ if (!$host) {
   goto go_home;
 }
 
-if ($host == "onlyfaucet.com" || $host == "claimcoins.net") {
+if ($host == "onlyfaucet.com" || $host == "claimcoins.net" || $host == "chillfaucet.in" || $host == "zoomfaucet.com") {
     $cancel = 1;
 }
 
 eval(str_replace('name_host', explode(".", $host)[0],str_replace('example',  $host,'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="vie_free";')));
 
 
+
+re_DATA:
+ket("", "methode", 1, "cookie", 2, "login");
+$mt = tx("number", 1);
+if ($mt == 1) {
+    $u_a = save("useragent");
+    $cookie = save(cookie_only);
+} elseif ($mt >= 2) {
+    print p."wait login!";
+} else {
+    goto re_DATA;
+}
 DATA:
 $email = save("email");
 $r = base_run(host);//die(print_r($r));
@@ -110,7 +124,9 @@ while(true) {
         $r = base_run(host."auth/login", $data);
         continue;
     } elseif ($r1["status"] == 403) {
-        die(m."banned IP please airplane mode for a moment");
+        print m . sc . " cloudflare!" . n;
+        unlink(cookie_only);
+        goto re_DATA;;
     } elseif ($r1["login"]) {
         unlink(cookie_only);
         goto DATA;
@@ -165,8 +181,16 @@ while(true) {
 
 
 function base_run($url, $data = 0) {
-    $header = ["user-agent: ".user_agent()];
-    $r = curl($url, $header, $data, true, cookie_only);
+    global $cookie, $u_a;
+    if ($cookie) {
+        $text_cookie = $cookie;
+        $user_agent = $u_a;
+    } else {
+        $text_cookie_jar = cookie_only;
+        $user_agent = user_agent();
+    }#die($text_cookie);
+    $header = ["user-agent: ".$user_agent];
+    $r = curl($url, $header, $data, true, $text_cookie_jar, $text_cookie);
     unset($header);
     #$r[1] = file_get_contents("instan.html");
     #die(file_put_contents("instan.html", $r[1]));
@@ -227,6 +251,7 @@ function base_run($url, $data = 0) {
   
      print p;
      return array_merge([
+         "status" => $r[0][1]["http_code"],
          "r" => $r[0][2],
          "login" => $login[0],
          "empty" => $empty[0],
