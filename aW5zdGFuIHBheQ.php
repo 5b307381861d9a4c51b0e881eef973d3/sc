@@ -51,7 +51,7 @@ if (!$host) {
   goto go_home;
 }
 
-if ($host == "onlyfaucet.com" || $host == "claimcoins.net" || $host == "chillfaucet.in" || $host == "zoomfaucet.com" || $host == "altcryp.com") {
+if ($host == "doge25.in" || $host == "onlyfaucet.com" || $host == "claimcoins.net" || $host == "chillfaucet.in" || $host == "zoomfaucet.com" || $host == "altcryp.com") {
     $cancel = 1;
 }
 
