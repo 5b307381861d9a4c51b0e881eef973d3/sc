@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -434,7 +435,7 @@ while (true) {
             goto firewall;
         }
         fire:
-        $cap = request_captcha($methode, $r[$methode], host);
+        eval(str_replace("request_captcha",  $reques[$inp], '$cap = request_captcha($methode, $r[methode], host);'));
         
         if (!$cap) {
             goto fire;
@@ -571,11 +572,29 @@ function base_run($url, $data = 0) {
        $name = [];
        $visit = [];
    }
-    preg_match_all('#(>|\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), "Available View:"], '', $r[1])), $count);
+    preg_match_all('#(>|\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), "Available View:", "-"], '', $r[1])), $count);
     
     preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $r[1], $u_r);
     preg_match_all("#(https?:\/\/" . sc . "[a-z\/.-]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", $r[1], $link);
-    if(preg_match("#(kiddyearner.com)#is", host)){
+    preg_match_all("#(fas fa-exclamation-circle></i>|alert-borderless'>|Toast.fire|Swal.fire|swal[(])(.*?)(<)#is", str_replace('"', '', $r[1]), $notif_1);
+    
+    foreach ($notif_1[2] as $notif_2) {
+    
+        if (strpos(strtolower($notif_2), "been") !== false || strpos(strtolower($notif_2), "`success`") !== false || strpos(strtolower($notif_2), "invalid") !== false || strpos(strtolower($notif_2), "key") !== false || strpos(strtolower($notif_2), "success") !== false || strpos(strtolower($notif_2), "failed") !== false) {
+            preg_match_all('#(title|html|text):(.*?)(,|\n})#is', $notif_2, $notif_3);
+            
+            if (!$notif_3[2][0]) {
+                $notif_3 = $notif_1;
+            }
+            
+            foreach ($notif_3[2] as $notif_4) {
+                if (strpos(strtolower($notif_4), "been") !== false || strpos(strtolower($notif_4), "`success`") !== false || strpos(strtolower($notif_4), "invalid") !== false || strpos(strtolower($notif_4), "key") !== false || strpos(strtolower($notif_4), "success") !== false || strpos(strtolower($notif_4), "failed") !== false) {
+                    $notif = ltrim(preg_replace("/[^a-zA-Z0-9-!. ]/", "", $notif_4));
+                }
+            }
+        }
+    }
+    /*if(preg_match("#(kiddyearner.com)#is", host)){
         $r[1] = str_replace("Swal.fire", "memek", $r[1]);
     }
     preg_match("#(alert-borderless'>|Swal.fire|swal[(])(.*?)(<)#is", $r[1], $n);
@@ -591,6 +610,7 @@ function base_run($url, $data = 0) {
         $n[2] = $nnn[2];
     }
     #toastr[`success`](`0.00003050
+    */
 
     preg_match_all("#(https?:\/\/[a-z0-9\/.-]*)(verify|ptc\/view|achievements\/claim|firewall*)(\/?[a-z0-9\/-]*)(.*?)#is", $r[1], $redirect);
 
@@ -615,7 +635,7 @@ function base_run($url, $data = 0) {
         "visit" => $visit,
         "left" => $count[2],
         "count" => $count[2],
-        "notif" => preg_replace("/[^a-zA-Z0-9-!. ]/", "", $n[2]),
+        "notif" => $notif,
         "url" => $u_r[0],
         "link" => array_merge(array_unique($link[0])),
         "url1" => $r[0][0]["location"],
@@ -655,3 +675,9 @@ $header[] = 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7';
     return $header;
 }
 
+#<h5 class="mb-0">Login</h5>cash.cc
+#class="btn btn-warning">Login</a>win
+#class="primary-btn">Login</a>hate
+#<span class="mb-0">Login</span>insta
+#class="btn btn--medium btn--orange"><span>LOGIN<payz
+#>Login<
