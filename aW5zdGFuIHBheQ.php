@@ -120,9 +120,12 @@ c().asci(sc).ket("email", $email, "", $host).line();
 
 links:
 while(true) {
-    $r1 = base_run($link);
-    
-    if ($r1["firewall"]) {
+    if ($mt == 1) {
+        $cookie = save(cookie_only);
+    }
+    $r1 = base_run($link);#die(file_put_contents("instan.html", $r1["res"]));
+    #die(print_r($link));
+    if ($r1["firewall"] || $r1["login"]) {
         unlink(cookie_only);
         print m . "Firewall!";
         r();
@@ -207,18 +210,23 @@ function base_run($url, $data = 0) {
     preg_match("#(>Login<|Enter Your Faucet)#is", $r[1], $login);
     preg_match("#empty<#is", $r[1], $empty);
     preg_match_all('#<input type="hidden" name="(.*?)" id="token" value="(.*?)">#is', str_replace('name="anti', '', $r[1]), $token);
-    preg_match_all('#(title|html):(.*?)(,)#is', str_replace("'", "", $r[1]), $nn);
-    preg_match("#(alert-borderless'>|Swal.fire|swal[(])(.*?)(<)#is", str_replace(['re("Dis', 'fire({'], '', $r[1]), $n);
-    preg_match_all('#(title|html):(.*?)(backdrop|,|\n})#is', $r[1], $nn);
-
-    if (!$n[2]) {
-        $n[2] = $nn[2][0] . $nn[2][1];
-    }
+    preg_match_all("#(fas fa-exclamation-circle></i>|alert-borderless'>|Toast.fire|Swal.fire|swal[(])(.*?)(<)#is", str_replace('"', '', $r[1]), $notif_1);
     
-    preg_match('#(`success`|babitolol)(.*?)([)])#is', $r[1], $nnn);
-
-    if (!$n[2]) {
-        $n[2] = $nnn[2];
+    foreach ($notif_1[2] as $notif_2) {
+    
+        if (strpos(strtolower($notif_2), "been") !== false || strpos(strtolower($notif_2), "`success`") !== false || strpos(strtolower($notif_2), "invalid") !== false || strpos(strtolower($notif_2), "key") !== false || strpos(strtolower($notif_2), "success") !== false || strpos(strtolower($notif_2), "failed") !== false) {
+            preg_match_all('#(title|html):(.*?)(,|\n})#is', $notif_2, $notif_3);
+            
+            if (!$notif_3[2][0]) {
+                $notif_3 = $notif_1;
+            }
+            
+            foreach ($notif_3[2] as $notif_4) {
+                if (strpos(strtolower($notif_4), "been") !== false || strpos(strtolower($notif_4), "`success`") !== false || strpos(strtolower($notif_4), "invalid") !== false || strpos(strtolower($notif_4), "key") !== false || strpos(strtolower($notif_4), "success") !== false || strpos(strtolower($notif_4), "failed") !== false) {
+                    $notif = ltrim(preg_replace("/[^a-zA-Z0-9-!. ]/", "", $notif_4));
+                }
+            }
+        }
     }
     $dom = new DOMDocument;
     $dom->loadHTML($r[1]);
@@ -265,7 +273,7 @@ function base_run($url, $data = 0) {
          "visit" => $visit[0],
          "left" => $left[1],
          "url1" => $r[0][0]["location"],
-         "notif" => preg_replace("/[^a-zA-Z0-9-!. ]/", "", $n[2]),
+         "notif" => $notif,
          "firewall" => $firewall[0]
      ], $methode);
 }
