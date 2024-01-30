@@ -2,7 +2,6 @@
 
 
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -212,11 +211,11 @@ function base_run($url, $data = 0) {
     preg_match("#(>Login<|Enter Your Faucet)#is", $r[1], $login);
     preg_match("#empty<#is", $r[1], $empty);
     preg_match_all('#<input type="hidden" name="(.*?)" id="token" value="(.*?)">#is', str_replace('name="anti', '', $r[1]), $token);
-    preg_match_all("#(fas fa-exclamation-circle></i>|alert-borderless'>|Toast.fire|Swal.fire|swal[(])(.*?)(<)#is", str_replace(['"', 'fire("Ad'], '', $r[1]), $notif_1);
+    preg_match_all("#(fas fa-exclamation-circle></i>|alert-borderless'>|Toast.fire|Swal.fire|swal[(])(.*?)(<)#is", str_replace(['"'], '', $r[1]), $notif_1);
     
     foreach ($notif_1[2] as $notif_2) {
     
-        if (strpos(strtolower($notif_2), "been") !== false || strpos(strtolower($notif_2), "`success`") !== false || strpos(strtolower($notif_2), "invalid") !== false || strpos(strtolower($notif_2), "key") !== false || strpos(strtolower($notif_2), "success") !== false || strpos(strtolower($notif_2), "failed") !== false) {
+        if (strpos(strtolower($notif_2), "been") !== false || strpos(strtolower($notif_2), "`success`") !== false || strpos(strtolower($notif_2), "invalid") !== false || strpos(strtolower($notif_2), "key") !== false || strpos(strtolower($notif_2), "success") !== false) {
             preg_match_all('#(title|html):(.*?)(,|\n})#is', $notif_2, $notif_3);
             
             if (!$notif_3[2][0]) {
@@ -224,7 +223,7 @@ function base_run($url, $data = 0) {
             }
             
             foreach ($notif_3[2] as $notif_4) {
-                if (strpos(strtolower($notif_4), "been") !== false || strpos(strtolower($notif_4), "`success`") !== false || strpos(strtolower($notif_4), "invalid") !== false || strpos(strtolower($notif_4), "key") !== false || strpos(strtolower($notif_4), "success") !== false || strpos(strtolower($notif_4), "failed") !== false) {
+                if (strpos(strtolower($notif_4), "been") !== false || strpos(strtolower($notif_4), "`success`") !== false || strpos(strtolower($notif_4), "invalid") !== false || strpos(strtolower($notif_4), "key") !== false || strpos(strtolower($notif_4), "success") !== false) {
                     $notif = ltrim(preg_replace("/[^a-zA-Z0-9-!. ]/", "", $notif_4));
                 }
             }
