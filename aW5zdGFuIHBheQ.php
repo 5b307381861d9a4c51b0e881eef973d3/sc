@@ -1,6 +1,8 @@
 <?php
 
 
+
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -210,7 +212,7 @@ function base_run($url, $data = 0) {
     preg_match("#(>Login<|Enter Your Faucet)#is", $r[1], $login);
     preg_match("#empty<#is", $r[1], $empty);
     preg_match_all('#<input type="hidden" name="(.*?)" id="token" value="(.*?)">#is', str_replace('name="anti', '', $r[1]), $token);
-    preg_match_all("#(fas fa-exclamation-circle></i>|alert-borderless'>|Toast.fire|Swal.fire|swal[(])(.*?)(<)#is", str_replace('"', '', $r[1]), $notif_1);
+    preg_match_all("#(fas fa-exclamation-circle></i>|alert-borderless'>|Toast.fire|Swal.fire|swal[(])(.*?)(<)#is", str_replace(['"', 'fire("Ad'], '', $r[1]), $notif_1);
     
     foreach ($notif_1[2] as $notif_2) {
     
