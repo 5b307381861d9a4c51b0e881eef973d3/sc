@@ -22,19 +22,18 @@ if (!$eval) {
 
 
 $url = save("url_offerwall");
-
 $build = parse_url(str_replace("//offerwall","/offerwall", $url));
 $user = explode("/", $build["path"])[3];
 $key = explode("/", $build["path"])[2];
 
 
 
-eval(str_replace('name_host',explode(".", $url)[0],str_replace('example', $build["host"],'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="ofer";')));
+eval(str_replace('name_host',explode(".", $build["host"])[0],str_replace('example', $build["host"],'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="ofer";')));
 
 
 DATA:
-$u_a = save("useragent");
-unlink("ofer.txt");
+$u_a = save("useragent").' (compatible; Googlebot/2.1; +https://www.google.com/bot.html)';
+unlink(sc."ofer.txt");
 
 home:
 c();
@@ -50,7 +49,7 @@ offerwall:
 $x = 0;
 while(true) {
     $x++;
-    unlink("ofer.txt");
+    unlink(sc."ofer.txt");
     $r = base_offer($url);
     #die(print_r($r));
   
@@ -72,7 +71,7 @@ while(true) {
             "sid" => $user,
             "key" => $key,
             "token" => $r["data"][0]
-        );
+        );#die(file_put_contents("bitmun.html", $r1["res"]));
         $t = time() + 90;
         $bypass = visit_short($r1, $url, $data_token);
       
@@ -89,10 +88,10 @@ while(true) {
                 L($t - $t1);
             }
         
-            $r2 = base_offer($bypass);
+            $r2 = base_offer($bypass);//die(print_r($r2));
         
-            if (preg_match("#suc#is", $r2["notif"])) {
-                print h.$r2["notif"].n;
+            if (preg_match("#suc#is", $r2["notif_test"])) {
+                print h.$r2["notif_test"].n;
                 line();
                 goto offerwall;
             }
@@ -118,7 +117,7 @@ while(true) {
     } elseif ($r1["status"] >= 201) {
         continue;
     } elseif (!$r1["hash"]) {
-        unlink("ofer.txt");
+        unlink(sc."ofer.txt");
         die(text_line(m."We're sorry but there are no more offers available right now. Please try again later!"));
     }
     #die(print_r($r1));
@@ -188,6 +187,18 @@ function base_offer($url, $data = 0, $xml = 0) {
     preg_match('#(let ctimer = |var duration = |id="claimTime">)([0-9]{3}|[0-9]{2}|[0-9]{1})(;)#is',str_replace("'","", $r[1]), $tmr);
     preg_match('#recaptcha" data-sitekey="(.*?)"#is', $r[1], $recaptchav2);
     
+    
+    if (strlen($r[1]) >= 100) {
+        $dom = new DOMDocument;
+        $dom->loadHTML($r[1]);
+        $xpath = new DOMXPath($dom);
+        $successElement = $xpath->query('//div[@class="alert alert-success mt-0"]')->item(0);
+        $expiredElement = $xpath->query('//div[@class="alert alert-danger mt-0"]')->item(0);
+        $notif_test = $successElement ? $successElement->textContent : ($expiredElement ? $expiredElement->textContent : '');
+        
+    }
+    
+    
     print p;
     return [
         "logout" => $logout,
@@ -201,6 +212,7 @@ function base_offer($url, $data = 0, $xml = 0) {
         "name" => $name[1],
         "url" => $url[1],
         "timer" => $tmr[2],
+        "notif_test" => $notif_test,
         "notif" => $notif[1].$notif[2],
         "recaptchav2" => $recaptchav2[1],
         "status" => $r[0][1]["http_code"]    
