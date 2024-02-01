@@ -1,10 +1,25 @@
 <?php
 
 
-if($eval == false) {
-    eval(str_replace('<?php',"",get_e("build_index.php")));
-    eval(str_replace('<?php',"",get_e("shortlink_index.php")));
+if (!$eval) {
+    eval(str_replace('<?php', "", get_e("build_index.php")));
+    $reques = array(
+        1 => "xevil", 2 => "multibot"
+    );
+    ket(1, "xevil", 2, "multibot");
+    
+    while(true) {
+        $inp = tx("number", 1);
+      
+        if ($inp == 0) {
+            continue;
+        } elseif (2 >= $inp) {
+            break;
+        }
+    }
+    eval(str_replace('<?php',"",str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
 }
+
 
 go:
 c();
@@ -18,24 +33,26 @@ for($i=1;$i<10;$i++){
         ket($i,$web[$i]);
     }
 }
-$p = preg_replace("/[^0-9]/","",trim(tx("number")));
+$p = tx("number", 1);
 $host=$web[$p];
 if(!$host){
     goto go;
 }
 eval(str_replace('name_host',explode(".",$host)[0],str_replace('example',$host,'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="af";c();')));
-$asu = cookie_only;DATA:
-$u_a = save("useragent");
-$u_c = save(cookie_only);
+$asu = cookie_only;
+
+DATA:
+$u_a = new_save("user-agent")["user-agent"];
+$u_c = new_save(host)[explode("/", host)[2]];
 c();
 $r = base_run(host."dashboard/claim/auto");
 if($r["status"] == 403){
     print m.sc." cloudflare!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
 } elseif($r["register"]){
     print m.sc." cookie expired!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
 }
 ket("+","script for ".explode("/",host)[2]);
@@ -50,7 +67,7 @@ for($s=2;$s<11;$s++){
         ket($s-7,$s." minutes (2% bonus)");
         line();}
     }
-    $fq=tx("number").line();
+    $fq = tx("number", 1).line();
     preg_match("([0-3]{1})",$fq,$frequency);
     if($fq == 0 or !$frequency[0]){
         goto frequency;
@@ -60,7 +77,7 @@ for($s=2;$s<11;$s++){
         ket($i,$i."x boost");
     }
     line();
-    $bs=tx("number").line();
+    $bs=tx("number", 1).line();
     preg_match("([0-4]{1})",$bs,$boost);
     if($bs == 0 or !$boost[0]){
         goto boost;
@@ -68,11 +85,11 @@ for($s=2;$s<11;$s++){
     $r = base_run(host."dashboard/shortlinks");
     if($r["status"] == 403){
         print m.sc." cloudflare!".n;
-        unlink(cookie_only);
+        new_save(host, true);
         goto DATA;
     } elseif($r["register"]){
         print m.sc." cookie expired!".n;
-        unlink(cookie_only);
+        new_save(host, true);
         goto DATA;
     }
     c().asci(sc).ket("username",$r["username"],"balance",$r["balance"]).line();
@@ -81,11 +98,11 @@ for($s=2;$s<11;$s++){
         $r = base_run(host."dashboard/shortlinks");
         if($r["status"] == 403){
             print m.sc." cloudflare!".n;
-            unlink(cookie_only);
+            new_save(host, true);
             goto DATA;
         } elseif($r["register"]){
             print m.sc." cookie expired!".n;
-            unlink(cookie_only);
+            new_save(host, true);
             goto DATA;
         }
         if($r["status"] == 1){
@@ -134,11 +151,11 @@ for($s=2;$s<11;$s++){
         $r3 = base_run(host."dashboard/claim/auto/start");
         if($r3["status"] == 403){
             print m.sc." cloudflare!".n;
-            unlink(cookie_only);
+            new_save(host, true);
             goto DATA;
         } elseif($r3["register"]){
             print m.sc." cookie expired!".n;
-            unlink(cookie_only);
+            new_save(host, true);
             goto DATA; 
         } elseif($r3["notif"]){
             an(h.$r3["notif"].n);
