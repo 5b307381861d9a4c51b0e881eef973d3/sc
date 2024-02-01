@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -456,9 +457,9 @@ while (true) {
                 goto dashboard;
             } /*elseif ($redirect == "ptc") {
                 goto ptc;
-            } elseif ($redirect == "faucet") {
-                goto faucet;
-            } */elseif ($redirect == "auto") {
+            }*/ elseif ($redirect == "shortlinks") {
+                goto shortlinks;
+            } elseif ($redirect == "auto") {
                 goto auto;
             }
         } else {
