@@ -438,7 +438,7 @@ while (true) {
             goto firewall;
         }
         fire:
-        eval(str_replace("request_captcha",  $reques[$inp], '$cap = request_captcha($methode, $r[methode], host);'));
+        eval(str_replace("request_captcha",  "multibot", '$cap = request_captcha($methode, $r[$methode], host);'));
         
         if (!$cap) {
             goto fire;
@@ -455,9 +455,9 @@ while (true) {
 
             if ($redirect == "dashboard") {
                 goto dashboard;
-            } /*elseif ($redirect == "ptc") {
-                goto ptc;
-            }*/ elseif ($redirect == "shortlinks") {
+            } elseif ($redirect == "achievement") {
+                goto achievement;
+            } elseif ($redirect == "shortlinks") {
                 goto shortlinks;
             } elseif ($redirect == "auto") {
                 goto auto;
