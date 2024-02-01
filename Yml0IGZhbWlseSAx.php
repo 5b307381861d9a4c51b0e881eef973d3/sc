@@ -2,10 +2,26 @@
 
 
 
-if($eval == false){
-  eval(str_replace('<?php',"",get_e("build_index.php")));
-  eval(str_replace('<?php',"",get_e("shortlink_index.php")));
+if (!$eval) {
+    eval(str_replace('<?php', "", get_e("build_index.php")));
+    $reques = array(
+        1 => "xevil", 2 => "multibot"
+    );
+    ket(1, "xevil", 2, "multibot");
+    
+    while(true) {
+        $inp = tx("number", 1);
+      
+        if ($inp == 0) {
+            continue;
+        } elseif (2 >= $inp) {
+            break;
+        }
+    }
+    eval(str_replace('<?php',"",str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
 }
+
+
 
 
 go:
@@ -22,12 +38,12 @@ $web = [
   9 => "litecoinbits.com",
   10 => "earnbitmoon.xyz"
 ];
-for($i=1;$i<count($web)+1;$i++){
+for($i = 1; $i < count($web) + 1; $i++){
   if($web[$i]){
     ket($i,$web[$i]);
   }
 }
-$p = preg_replace("/[^0-9]/","",trim(tx("number")));
+$p = trim(tx("number", 1);
 $host = $web[$p];
 if(!$host){
   goto go;
@@ -36,19 +52,19 @@ if(!$host){
 eval(str_replace('name_host',explode(".",$host)[0],str_replace('example',$host,'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="icon";c();')));
 
 DATA:
-$u_a = save("useragent");
-$u_c = save(cookie_only);
+$u_a = new_save("user-agent")["user-agent"];
+$u_c = new_save(host)[explode("/", host)[2]];
 
 home:
 c();
 $home = base_run(host."ptc.html");#die(print_r($home));
 if($home["status"] == 403){
   print m."cloudflare!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 } elseif($home["logout"]){
   print m."cookie expired!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 }
 if($home["ptc"] || $home["shortlinks"] || $home["faucet"]){
@@ -85,11 +101,11 @@ while(true){
   $r = base_run(host.$ptc);
   if($r["status"] == 403){
     print m."cloudflare!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif($r["logout"]){
     print m."cookie expired!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   }
   if($update == $r["balance"][0]){
@@ -133,11 +149,11 @@ while(true){
   #die(print_r($r));
   if($r["status"] == 403){
     print m."cloudflare!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif($r["logout"]){
     print m."cookie expired!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   }
   $update = $r["balance"][0];
@@ -183,11 +199,11 @@ while(true){
   #die(print_r($r));die(file_put_contents("bitmun.html",$r["res"]));
   if($r["status"] == 403){
     print m."cloudflare!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif($r["logout"]){
     print m."cookie expired!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   }
   if($r["claim"] >= rand(90,100)){
