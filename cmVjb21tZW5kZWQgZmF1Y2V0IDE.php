@@ -83,11 +83,15 @@ eval(str_replace('name_host', explode(".", $host)[0], str_replace('example', $ho
 ket(1, "new cookie", 2, "old cookie (jika tersedia)");
 $tx = tx("number", 1);
 if ($tx == 1) {
-   unlink(cookie_only);
+   new_save(host, true);
 }
 DATA:
-$u_a = save("useragent");
-$u_c = save(cookie_only);
+$u_a = new_save("user-agent")["user-agent"];
+$u_c = new_save(host)[explode("/", host)[2]];
+#die(print_r($new_save));
+
+#$u_a = save("useragent");
+#$u_c = save(cookie_only);
 #$r = base_run(host."links");die(print_r($r));
 /*$t = $r["token_csrf"];
 print "https://rscaptcha.com/captcha/getimage?token=".explode('"', $t[2][2])[0].n.n;//L(6);
@@ -123,11 +127,11 @@ $link = $r["link"];
 //goto faucet;
 if ($r["status"] == 403) {
     print m . sc . " cloudflare!" . n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
 } elseif ($r["register"]) {
     print m . sc . " cookie expired!" . n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
 } elseif ($r["firewall"]) {
     print m . "Firewall!";
@@ -187,12 +191,12 @@ while (true) {
             }
         }
         print m . sc . " cloudflare!" . n;
-        unlink(cookie_only);
+        new_save(host, true);
         unset($dark);
         goto DATA;
     } elseif ($r["register"]) {
         print m . sc . " cookie expired!" . n;
-        unlink(cookie_only);
+        new_save(host, true);
         unset($dark);
         goto DATA;
     } elseif ($r["firewall"]) {
@@ -305,11 +309,11 @@ $r = base_run($achievements);
 #die(print_r($r));
 if ($r["status"] == 403) {
     print m . sc . " cloudflare!" . n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
 } elseif ($r["register"]) {
     print m . sc . " cookie expired!" . n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
 } elseif ($r["firewall"]) {
     print m . "Firewall!";
@@ -364,11 +368,11 @@ while (true) {
 
     if ($r["status"] == 403) {
         print m . sc . " cloudflare!" . n;
-        unlink(cookie_only);
+        new_save(host, true);
         goto DATA;
     } elseif ($r["register"]) {
         print m . sc . " cookie expired!" . n;
-        unlink(cookie_only);
+        new_save(host, true);
         goto DATA;
     } elseif ($r["firewall"]) {
         print m . "Firewall!";
@@ -466,16 +470,9 @@ while (true) {
 
 
 function base_run($url, $data = 0) {
-    tai:
-    $header = head();
+    $header = head();#die(print_r($header));
     $r = curl($url, $header, $data, true, false);
-    /*if (!$r[1]) {
-       print p ."loss page!";
-       r();
-       goto tai;
-    }*/
     unset($header);
-    #if ($r[0][1]["http_code"] == 0) {die(file_put_contents("bitmun.html", $r[1]));}
     #$r[1] = file_get_contents("asu.html");
     #die(file_put_contents("asu.html", $r[1]));
     preg_match("#Just a moment#is", $r[1], $cf);
@@ -566,10 +563,10 @@ function base_run($url, $data = 0) {
                 //$left[] = $claimCount;        
             }
         }
-   } else {
-       $name = [];
-       $visit = [];
-   }
+    } else {
+        $name = [];
+        $visit = [];
+    }
     preg_match_all('#(>|\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), "Available View:", "-"], '', $r[1])), $count);
     
     preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $r[1], $u_r);
