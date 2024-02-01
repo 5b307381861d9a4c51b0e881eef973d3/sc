@@ -73,7 +73,7 @@ if ($mt == 1) {
     goto re_DATA;
 }
 DATA:
-$email =new_save("email")["email"];
+$email = new_save("email")["email"];
 $r = base_run(host);//die(print_r($r));
 
 if ($r["status"] == 403) {
@@ -265,10 +265,13 @@ function base_run($url, $data = 0) {
                     $tl[] = $list[$i];
                 }
             }
-            $methode["links"]= [array_filter($tl),array_filter($lin)];
+            $methode["links"] = [array_filter($tl),array_filter($lin)];
         } else {
             $methode = [1 => 2];
         }
+    }
+    if (!$lin[0]) {
+       $methode = [1 => 2];
     }
     preg_match_all('#[a-z]*:\/\/[a-zA-Z0-9\/-\/.-]*\/go\/?[a-zA-Z0-9\/-\/.]*#is', $r[1], $visit);
     preg_match_all('#>(\d+\/+\d+)#is', trimed($r[1]), $left);
