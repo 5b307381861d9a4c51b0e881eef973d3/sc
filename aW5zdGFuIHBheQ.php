@@ -64,9 +64,6 @@ re_DATA:
 ket("", "methode", 1, "cookie", 2, "login");
 $mt = tx("number", 1);
 if ($mt == 1) {
-    unlink(cookie_only);
-    new_save(host, true);
-    r();
     $u_a = new_save("user-agent")["user-agent"];
     $cookie = new_save(host)[explode("/", host)[2]];
 } elseif ($mt >= 2) {
@@ -91,7 +88,9 @@ $r = base_run(host."auth/login", $data);
 
 if ($r["login"]) {
     unlink(cookie_only);
-    new_save(host, true);
+    if ($mt == 1) {
+        new_save(host, true);
+    }
     goto DATA;
 }
 print $r["notif"];
@@ -130,7 +129,9 @@ while(true) {
     #die(print_r($link));
     if ($r1["firewall"] || $r1["login"]) {
         unlink(cookie_only);
-        new_save(host, true);
+        if ($mt == 1) {
+            new_save(host, true);
+        }
         print m . "Firewall!";
         r();
         $r = base_run(host);
@@ -142,11 +143,15 @@ while(true) {
     } elseif ($r1["status"] == 403) {
         print m . sc . " cloudflare!" . n;
         unlink(cookie_only);
-        new_save(host, true);
+        if ($mt == 1) {
+            new_save(host, true);
+        }
         goto re_DATA;
     } elseif ($r1["login"]) {
         unlink(cookie_only);
-        new_save(host, true);
+        if ($mt == 1) {
+            new_save(host, true);
+        }
         goto DATA;
     } elseif ($r1["empty"]) {
         print m."devnya Rungkat ganti coin aja".n;
@@ -236,7 +241,7 @@ function base_run($url, $data = 0) {
         }
     }
     
-    if (strlen($r[1]) >= 100) {
+    if (strlen($r[1]) >= 1000) {
         $dom = new DOMDocument;
         $dom->loadHTML($r[1]);
         $linksss = $dom->getElementsByTagName('a');
