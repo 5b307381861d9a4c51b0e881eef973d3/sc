@@ -3,34 +3,41 @@
 
 
 
-if($eval == false){
-  eval(str_replace('<?php',"",get_e("build_index.php")));
-  eval(str_replace('<?php',"",get_e("shortlink_index.php")));
+if (!$eval) {
+    eval(str_replace('<?php', "", get_e("build_index.php")));
+    $reques = array(
+        1 => "xevil", 2 => "multibot"
+    );
+    ket(1, "xevil", 2, "multibot");
+    
+    while(true) {
+        $inp = tx("number", 1);
+      
+        if ($inp == 0) {
+            continue;
+        } elseif (2 >= $inp) {
+            break;
+        }
+    }
+    eval(str_replace('<?php',"",str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
 }
-
-
-
-
 
 eval(str_replace('name_host',explode(".",'coinfola.com')[0],str_replace('example','coinfola.com','const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="site_url";')));
 
 
 DATA:
-$u_a = save("useragent");
-$u_c = save(cookie_only);
-#$r = base_run(host."shortlinks");#die(print_r($r));
-
-
+$u_a = new_save("user-agent")["user-agent"];
+$u_c = new_save(host)[explode("/", host)[2]];
 
 
 $r = base_run(host."account");
 if($r["status"] == 403){
   print m."cloudflare!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 } elseif($r["status"] == 302){
   print m."cookie expired!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 }
 
@@ -44,11 +51,11 @@ while(true){
   $r = base_run(host."shortlinks");#die(print_r($r));
   if($r["status"] == 403){
     print m."cloudflare!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif($r["status"] == 302){
     print m."cookie expired!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   }
   $bypas = visit_short($r, host."shortlinks", "csrfToken=&go=");
