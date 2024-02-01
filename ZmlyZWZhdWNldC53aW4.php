@@ -1,28 +1,42 @@
 <?php
 
 
-if($eval == false){
-  eval(str_replace('<?php',"",get_e("build_index.php")));
-  eval(str_replace('<?php',"",get_e("shortlink_index.php")));
+if (!$eval) {
+    eval(str_replace('<?php', "", get_e("build_index.php")));
+    $reques = array(
+        1 => "xevil", 2 => "multibot"
+    );
+    ket(1, "xevil", 2, "multibot");
+    
+    while(true) {
+        $inp = tx("number", 1);
+      
+        if ($inp == 0) {
+            continue;
+        } elseif (2 >= $inp) {
+            break;
+        }
+    }
+    eval(str_replace('<?php',"",str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
 }
 
 eval(str_replace('name_host',explode(".","firefaucet.win")[0],str_replace('example',"firefaucet.win",'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="firefaucet";')));
 
 
 DATA:
-$u_a = save("useragent");
-$u_c = save(cookie_only);
+$u_a = new_save("user-agent")["user-agent"];
+$u_c = new_save(host)[explode("/", host)[2]];
 /*
 faucet:
 while(true){
   $r = base_run(host."faucet/");#die(print_r($r));
   if($r["status"] == 403){
     print m."cloudflare!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif($r["account"]){
     print m."cookie expired!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   }
   if(preg_match('#suc#is',$r["notif"])){
@@ -97,11 +111,11 @@ $x++;
 $r = base_run(host);#die(print_r($r));
 if($r["status"] == 403){
   print m."cloudflare!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 } elseif($r["account"]){
   print m."cookie expired!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 }
 if($x == 1){
@@ -127,11 +141,11 @@ while(true){
   $r = base_run(host."levels");
   if($r["status"] == 403){
     print m."cloudflare!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif($r["account"]){
     print m."cookie expired!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif(!$r["tasks_level"][0]){
     goto daily_task;
@@ -151,11 +165,11 @@ $r = base_run(host."tasks");
 #die(file_put_contents("response_body.html",$r["res"]));
 if($r["status"] == 403){
   print m."cloudflare!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 } elseif($r["account"]){
   print m."cookie expired!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 }
 $b = -1;
@@ -185,11 +199,11 @@ while(true){
   $r = base_run(host."shortlinks");
   if($r["status"] == 403){
     print m."cloudflare!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif($r["account"]){
     print m."cookie expired!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   }
   $bypas = visit_short($r);
@@ -213,11 +227,11 @@ auto:
 $r = base_run(host);#die(print_r($r));
 if($r["status"] == 403){
   print m."cloudflare!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 } elseif($r["account"]){
   print m."cookie expired!".n;
-  unlink(cookie_only);
+  new_save(host, true);
   goto DATA;
 } elseif(!$r["token"]){
   goto auto;
@@ -236,11 +250,11 @@ while(true){
   $r = base_run(host."start", $data);
   if($r["status"] == 403){
     print m."cloudflare!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif($r["account"]){
     print m."cookie expired!".n;
-    unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
   } elseif(!$r["timer"]){
     continue;
