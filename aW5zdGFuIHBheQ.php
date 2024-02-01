@@ -65,9 +65,10 @@ ket("", "methode", 1, "cookie", 2, "login");
 $mt = tx("number", 1);
 if ($mt == 1) {
     unlink(cookie_only);
+    new_save(host, true);
     r();
-    $u_a = save("useragent");
-    $cookie = save(cookie_only);
+    $u_a = new_save("user-agent")["user-agent"];
+    $cookie = new_save(host)[explode("/", host)[2]];
 } elseif ($mt >= 2) {
     print p."wait login!";
     r();
@@ -75,7 +76,7 @@ if ($mt == 1) {
     goto re_DATA;
 }
 DATA:
-$email = save("email");
+$email =new_save("email")["email"];
 $r = base_run(host);//die(print_r($r));
 
 if ($r["status"] == 403) {
@@ -90,6 +91,7 @@ $r = base_run(host."auth/login", $data);
 
 if ($r["login"]) {
     unlink(cookie_only);
+    new_save(host, true);
     goto DATA;
 }
 print $r["notif"];
@@ -122,12 +124,13 @@ c().asci(sc).ket("email", $email, "", $host).line();
 links:
 while(true) {
     if ($mt == 1) {
-        $cookie = save(cookie_only);
+        $cookie = new_save(host)[explode("/", host)[2]];
     }
     $r1 = base_run($link);#die(file_put_contents("instan.html", $r1["res"]));
     #die(print_r($link));
     if ($r1["firewall"] || $r1["login"]) {
         unlink(cookie_only);
+        new_save(host, true);
         print m . "Firewall!";
         r();
         $r = base_run(host);
@@ -139,9 +142,11 @@ while(true) {
     } elseif ($r1["status"] == 403) {
         print m . sc . " cloudflare!" . n;
         unlink(cookie_only);
-        goto re_DATA;;
+        new_save(host, true);
+        goto re_DATA;
     } elseif ($r1["login"]) {
         unlink(cookie_only);
+        new_save(host, true);
         goto DATA;
     } elseif ($r1["empty"]) {
         print m."devnya Rungkat ganti coin aja".n;
@@ -223,39 +228,43 @@ function base_run($url, $data = 0) {
             }
             
             foreach ($notif_3[2] as $notif_4) {
+            
                 if (strpos(strtolower($notif_4), "been") !== false || strpos(strtolower($notif_4), "`success`") !== false || strpos(strtolower($notif_4), "invalid") !== false || strpos(strtolower($notif_4), "key") !== false || strpos(strtolower($notif_4), "success") !== false) {
                     $notif = ltrim(preg_replace("/[^a-zA-Z0-9-!. ]/", "", $notif_4));
                 }
             }
         }
     }
-    $dom = new DOMDocument;
-    $dom->loadHTML($r[1]);
-    $linksss = $dom->getElementsByTagName('a');
     
-    foreach ($linksss as $linkss) {
-        $links = $linkss->getAttribute('href');
+    if (strlen($r[1]) >= 100) {
+        $dom = new DOMDocument;
+        $dom->loadHTML($r[1]);
+        $linksss = $dom->getElementsByTagName('a');
+    
+        foreach ($linksss as $linkss) {
+            $links = $linkss->getAttribute('href');
             
-        if (strpos($links, "currency") !== false) {
-            $link[] = $links;
-            $l_name1 = $linkss->parentNode->parentNode->getElementsByTagName('h2')->item(0);
-            $list[] = $l_name1 ? $l_name1->textContent : ($linkss ? $linkss->nodeValue : '');
+            if (strpos($links, "currency") !== false) {
+                $link[] = $links;
+                $l_name1 = $linkss->parentNode->parentNode->getElementsByTagName('h2')->item(0);
+                $list[] = $l_name1 ? $l_name1->textContent : ($linkss ? $linkss->nodeValue : '');
+            }
+        }
+   
+        if ($list[0]) {
+   
+            for ($i = 0; $i < count($link); $i++) {
+  
+                if (preg_match("#(link)#is", $link[$i])) {
+                    $lin[] = $link[$i];
+                    $tl[] = $list[$i];
+                }
+            }
+            $methode["links"]= [array_filter($tl),array_filter($lin)];
+        } else {
+            $methode = [1 => 2];
         }
     }
-   
-    if ($list[0]) {
-   
-    for ($i = 0; $i < count($link); $i++) {
-      if (preg_match("#(link)#is", $link[$i])) {
-        $lin[] = $link[$i];
-        $tl[] = $list[$i];
-      }
-    }
-    
-    $methode["links"]= [array_filter($tl),array_filter($lin)];
-  } else {
-    $methode = [1 => 2];
-  }
     preg_match_all('#[a-z]*:\/\/[a-zA-Z0-9\/-\/.-]*\/go\/?[a-zA-Z0-9\/-\/.]*#is', $r[1], $visit);
     preg_match_all('#>(\d+\/+\d+)#is', trimed($r[1]), $left);
     preg_match_all('#class="card-title mt-0">(.*?)<#is', str_replace('mt-0">Your', "", $r[1]), $name);
