@@ -43,7 +43,7 @@ for($i = 1; $i < count($web) + 1; $i++){
     ket($i,$web[$i]);
   }
 }
-$p = trim(tx("number", 1);
+$p = tx("number", 1);
 $host = $web[$p];
 if(!$host){
   goto go;
