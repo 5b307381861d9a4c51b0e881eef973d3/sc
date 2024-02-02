@@ -1,5 +1,6 @@
 <?php
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -45,7 +46,7 @@ if (!$host) {
 ket(1, "new url", 2, "old url");
 $tx = tx("number", 1);
 if ($tx == 1) {
-   new_save(host, true);
+   new_save($host, true);
 }
 $url = new_save($host)[$host];
 
@@ -57,7 +58,7 @@ $key = explode("/", $build["path"])[2];
 
 
 eval(str_replace('name_host',explode(".", $build["host"])[0],str_replace('example', $build["host"],'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="ofer";')));
-
+$c_txt = sc."ofer".rand(0, 999999999).".txt";
 
 
 DATA:
@@ -67,7 +68,7 @@ if ($build["host"] == "bitcotasks.com") {
 } else {
     $u_a = new_save("user-agent")["user-agent"];
 }
-unlink(sc."ofer.txt");
+unlink($c_txt);
 
 home:
 c();
@@ -83,7 +84,7 @@ offerwall:
 $x = 0;
 while(true) {
     $x++;
-    unlink(sc."ofer.txt");
+    unlink($c_txt);
     $r = base_offer($url);
     #die(print_r($r));
   
@@ -150,7 +151,7 @@ while(true) {
     } elseif ($r1["status"] >= 201) {
         continue;
     } elseif (!$r1["hash"]) {
-        unlink(sc."ofer.txt");
+        unlink($c_txt);
         die(text_line(m."We're sorry but there are no more offers available right now. Please try again later!"));
     }
     #die(print_r($r1));
