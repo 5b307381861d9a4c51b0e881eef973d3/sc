@@ -1,6 +1,5 @@
 <?php
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -20,8 +19,37 @@ if (!$eval) {
     eval(str_replace('<?php',"",str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
 }
 
+go_home:
+c();
+$web = [
+    "bitcotasks.com",
+    "offers4crypto.xyz",
+    "ewall.biz",
+    "offerwallmedia.com"
+];
+  
+for ($i = 0; $i < count($web); $i++) {
 
-$url = save("url_offerwall");
+    if ($web[$i]) {
+        ket($i + 1, $web[$i]);
+    }
+}
+
+$p = tx("number", 1);
+$host = $web[$p - 1];
+
+if (!$host) {
+  goto go_home;
+}
+
+ket(1, "new url", 2, "old url");
+$tx = tx("number", 1);
+if ($tx == 1) {
+   new_save(host, true);
+}
+$url = new_save($host)[$host];
+
+
 $build = parse_url(str_replace("//offerwall","/offerwall", $url));
 $user = explode("/", $build["path"])[3];
 $key = explode("/", $build["path"])[2];
@@ -31,8 +59,14 @@ $key = explode("/", $build["path"])[2];
 eval(str_replace('name_host',explode(".", $build["host"])[0],str_replace('example', $build["host"],'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="ofer";')));
 
 
+
 DATA:
-$u_a = save("useragent").' (compatible; Googlebot/2.1; +https://www.google.com/bot.html)';
+
+if ($build["host"] == "bitcotasks.com") {
+    $u_a = new_save("user-agent")["user-agent"].' (compatible; Googlebot/2.1; +https://www.google.com/bot.html)';
+} else {
+    $u_a = new_save("user-agent")["user-agent"];
+}
 unlink(sc."ofer.txt");
 
 home:
@@ -91,8 +125,7 @@ while(true) {
             $r2 = base_offer($bypass);//die(print_r($r2));
         
             if (preg_match("#suc#is", $r2["notif_test"])) {
-                print h.$r2["notif_test"].n;
-                line();
+                text_line(h . $r2["notif_test"]);
                 goto offerwall;
             }
       }
@@ -180,7 +213,7 @@ function base_offer($url, $data = 0, $xml = 0) {
     preg_match_all("#var (token|sub_id|hash|key|game_token) = '(.*?)'#is", $r[1], $data);
     preg_match_all('#data-hash=\\\"(.*?)\\\"#is', $r[1], $hash);
     preg_match_all('#data-slid=\\\"(.*?)\\\"#is', $r[1], $slid);
-    preg_match_all('#<h3>(.*?)<#is',str_replace("t<h3><","", $r[1]), $name);
+    preg_match_all('#(<h3>|class=\\\"boosted\\\"><span>)(.*?)<#is',str_replace("t<h3><","", $r[1]), $name);
     preg_match_all('#>(\d+•+\d+)<#is',str_replace("<\/span>\/","•", $r[1]), $z);
     preg_match('#<div class="alert alert-success mt-0" role="alert"><b>(.*?)</b>(.*?)</div>#is', $r[1], $notif);
     preg_match("#([a-z0-9]{64})#is", $r[1], $token);  
@@ -209,7 +242,7 @@ function base_offer($url, $data = 0, $xml = 0) {
         "token" => $token[1],
         "visit" => $slid[1],
         "left" => $z[1],
-        "name" => $name[1],
+        "name" => $name[2],
         "url" => $url[1],
         "timer" => $tmr[2],
         "notif_test" => $notif_test,
