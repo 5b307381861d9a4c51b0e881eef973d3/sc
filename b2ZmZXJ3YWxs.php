@@ -26,7 +26,9 @@ $web = [
     "bitcotasks.com",
     "offers4crypto.xyz",
     "ewall.biz",
-    "offerwallmedia.com"
+    "offerwallmedia.com",
+    "offerwhales.com",
+    "cryptoad.org"
 ];
   
 for ($i = 0; $i < count($web); $i++) {
