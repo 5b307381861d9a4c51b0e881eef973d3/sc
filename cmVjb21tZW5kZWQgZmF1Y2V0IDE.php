@@ -56,7 +56,6 @@ $web = [
     "bitsfree.net",
     "888satoshis.com",
     "earnfreebtc.io",
-    "bambit.xyz",
     "whoopyrewards.com",
     "feyorra.site",
     "kiddyearner.com",
@@ -70,7 +69,7 @@ for ($i = 0; $i < count($web); $i++) {
     }
 }
 #$p = 2;
-$p = preg_replace("/[^0-9]/", "", trim(tx("number")));
+$p = tx("number", 1);
 $host = $web[$p - 1];
 if (!$host) {
     goto go;
@@ -244,7 +243,9 @@ for ($i = 0; $i < count($dark[0]); $i++) {
             unset($dark[0][$i]);
             continue;
         }
-        if (preg_match("#_rsshort.com#is", $r["url"])) {
+        if (preg_match("#rsshort.com#is", $r["url"])) {
+            unset($dark[0][$i]);
+            continue;
             $xxnx = 7;
         } else {
             $xxnx = 5;
