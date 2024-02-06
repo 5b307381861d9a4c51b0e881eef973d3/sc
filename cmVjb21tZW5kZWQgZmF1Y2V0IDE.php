@@ -1,7 +1,5 @@
 <?php
 
-
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -478,7 +476,8 @@ function base_run($url, $data = 0) {
     #$r[1] = file_get_contents("asu.html");
     #die(file_put_contents("asu.html", $r[1]));
     preg_match("#Just a moment#is", $r[1], $cf);
-    preg_match("#(login)#is", str_replace(["Login every", "login with", "Daily Login", "timewall.io/users/login"], "", $r[1]), $register);
+    #preg_match("#(login)#is", str_replace(["Login every", "login with", "Daily Login", "timewall.io/users/login"], "", $r[1]), $register);
+    preg_match("#(>login<)#is", trimed($r[1]), $register);
     preg_match("#(antibotlink)#is", $r[1], $antb);
     preg_match("#(Protecting faucet|Daily limit reached|for Auto Faucet)#is", $r[1], $limit);
     preg_match("#firewall#is", $r[1], $firewall);
@@ -577,7 +576,15 @@ function base_run($url, $data = 0) {
     
     foreach ($notif_1[2] as $notif_2) {
     
-        if (strpos(strtolower($notif_2), "been") !== false || strpos(strtolower($notif_2), "invalid") !== false || strpos(strtolower($notif_2), "key") !== false || strpos(strtolower($notif_2), "success") !== false || strpos(strtolower($notif_2), "failed") !== false) {
+        $keywords = array(
+            "been",
+            "invalid",
+            "key",
+            "success",
+            "failed"
+        );
+
+        if (multi_strpos($notif_2, $keywords)) {
             preg_match_all('#(title|html|text):(.*?)(,|\n})#is', $notif_2, $notif_3);
             
             if (!$notif_3[2][0]) {
@@ -585,30 +592,13 @@ function base_run($url, $data = 0) {
             }
             
             foreach ($notif_3[2] as $notif_4) {
-                if (strpos(strtolower($notif_4), "been") !== false || strpos(strtolower($notif_4), "invalid") !== false || strpos(strtolower($notif_4), "key") !== false || strpos(strtolower($notif_4), "success") !== false || strpos(strtolower($notif_4), "failed") !== false) {
+
+                if (multi_strpos($notif_4, $keywords)) {
                     $notif = ltrim(preg_replace("/[^a-zA-Z0-9-!. ]/", "", $notif_4));
                 }
             }
         }
     }
-    /*if(preg_match("#(kiddyearner.com)#is", host)){
-        $r[1] = str_replace("Swal.fire", "memek", $r[1]);
-    }
-    preg_match("#(alert-borderless'>|Swal.fire|swal[(])(.*?)(<)#is", $r[1], $n);
-    preg_match_all('#(title|text|icon):(.*?)(,|\n})#is', $r[1], $nn);
-
-    if (!$n[2]) {
-        $n[2] = $nn[2][0] . $nn[2][1];
-    }
-    
-    preg_match('#(`success`|babitolol)(.*?)([)])#is', $r[1], $nnn);
-
-    if (!$n[2]) {
-        $n[2] = $nnn[2];
-    }
-    #toastr[`success`](`0.00003050
-    */
-
     preg_match_all("#(https?:\/\/[a-z0-9\/.-]*)(verify|ptc\/view|achievements\/claim|firewall*)(\/?[a-z0-9\/-]*)(.*?)#is", $r[1], $redirect);
 
     return [
@@ -654,27 +644,3 @@ function h_x() {
     }
     return $header;
 }
-#https://rscaptcha.com/captcha/getimage?token=YLxN8ziwPrlBJOAn3ZWRmesUa
-
-
-function h_rs() {
-    global $u_a;
-    $header[] = 'Host: rscaptcha.com';
-$header[] = 'sec-ch-ua: "Chromium";v="93", " Not;A Brand";v="99"';
-$header[] = 'user-agent: Mozilla/5.0 (Linux; Android 13; M2012K11AG) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.14 Mobile Safari/537.36';
-$header[] = 'accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8';
-$header[] = 'sec-fetch-site: cross-site';
-$header[] = 'sec-fetch-mode: no-cors';
-$header[] = 'sec-fetch-dest: image';
-$header[] = 'referer: https://claimtrx.com/';
-//$header[] = 'accept-encoding: gzip, deflate, br';
-$header[] = 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7';
-    return $header;
-}
-
-#<h5 class="mb-0">Login</h5>cash.cc
-#class="btn btn-warning">Login</a>win
-#class="primary-btn">Login</a>hate
-#<span class="mb-0">Login</span>insta
-#class="btn btn--medium btn--orange"><span>LOGIN<payz
-#>Login<
