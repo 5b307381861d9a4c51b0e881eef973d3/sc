@@ -243,8 +243,8 @@ for ($i = 0; $i < count($dark[0]); $i++) {
             continue;
         }
         if (preg_match("#rsshort.com#is", $r["url"])) {
-            #unset($dark[0][$i]);
-            #continue;
+            unset($dark[0][$i]);
+            continue;
             $xxnx = 7;
         } else {
             $xxnx = 5;
