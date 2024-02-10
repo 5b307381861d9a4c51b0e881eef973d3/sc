@@ -1,5 +1,6 @@
 <?php
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -77,7 +78,7 @@ eval(str_replace('name_host', explode(".", $host)[0], str_replace('example', $ho
 
 
 
-
+awalan:
 ket(1, "new cookie", 2, "old cookie (jika tersedia)");
 $tx = tx("number", 1);
 if ($tx == 1) {
@@ -242,8 +243,8 @@ for ($i = 0; $i < count($dark[0]); $i++) {
             continue;
         }
         if (preg_match("#rsshort.com#is", $r["url"])) {
-            unset($dark[0][$i]);
-            continue;
+            #unset($dark[0][$i]);
+            #continue;
             $xxnx = 7;
         } else {
             $xxnx = 5;
@@ -360,7 +361,8 @@ for ($i = 0; $i <= count($link); $i++) {
 }
 
 if (!$auto) {
-    die(lah(2, $redirect));
+    lah(2, $redirect);
+    goto awalan;
 }
 
 while (true) {
@@ -381,7 +383,8 @@ while (true) {
     }
 
     if ($r["limit"]) {
-        die(lah());
+        lah();
+        goto awalan;
     }
 
     if ($r["timer"]) {
@@ -477,7 +480,7 @@ function base_run($url, $data = 0) {
     #die(file_put_contents("asu.html", $r[1]));
     preg_match("#Just a moment#is", $r[1], $cf);
     #preg_match("#(login)#is", str_replace(["Login every", "login with", "Daily Login", "timewall.io/users/login"], "", $r[1]), $register);
-    preg_match("#(>login<)#is", trimed($r[1]), $register);
+    preg_match("#(>login<|>Signin<)#is", trimed($r[1]), $register);
     preg_match("#(antibotlink)#is", $r[1], $antb);
     preg_match("#(Protecting faucet|Daily limit reached|for Auto Faucet)#is", $r[1], $limit);
     preg_match("#firewall#is", $r[1], $firewall);
