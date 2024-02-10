@@ -1,7 +1,6 @@
 <?php
 
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -34,179 +33,189 @@ c();
 $x = 0;
 home:
 $x++;
-$r = base_run(host. "dashboard");#die(print_r($r));
-if($r["status"] == 403){
-  print m."cloudflare!".n;
-  new_save(host, true);
-  goto DATA;
-} elseif($r["account"]){
-  print m."cookie expired!".n;
-  new_save(host, true);
-  goto DATA;
-}
-if($x == 1){
-  c().asci(sc).ket("username",$r["username"]);
-  ket("balance",$r["balance"]);
-  line();
-  print n;
-}
-goto shortlinks;
-
-if($r["claim_reward"] >= 1){
-  print k."wait claimed reward levels".n;
-  line();
-  L(5);
-  goto claim_reward;
-} else {
-  L(5);
-  goto daily_task;
-}
-
-
-
-claim_reward:
-while(true){
-  $r = base_run(host."levels");
-  if($r["status"] == 403){
+$r = base_run(host."dashboard");#die(print_r($r));
+if ($r["status"] == 403) {
     print m."cloudflare!".n;
     new_save(host, true);
     goto DATA;
-  } elseif($r["account"]){
+} elseif ($r["account"]) {
     print m."cookie expired!".n;
     new_save(host, true);
     goto DATA;
-  } elseif(!$r["tasks_level"][0]){
-    goto daily_task;
-  }
-  L(5);
-  $r1 = base_run(host.$r["tasks_level"][0]);
-  if(preg_match('#suc#is',$r1["notif"])){
-    print text_line(h.$r1["notif"]);
-  } else {
-    print m.$r1["notif"];
+}
+if ($x == 1) {
+    c().asci(sc).ket("username",$r["username"]);
+    ket("balance",$r["balance"]);
+    line();
+    print n;
+}
+
+
+
+
+ads:
+while(true) {
+    $r = base_run(host."ads");
+    #die(print_r($r));
+    if ($r["status"] == 403) {
+        print m."cloudflare!".n;
+        new_save(host, true);
+        goto DATA;
+    } elseif ($r["account"]) {
+        print m."cookie expired!".n;
+        new_save(host, true);
+        goto DATA;
+    } elseif (!$r["ptc"]) {
+        goto iframe;
+    }
+    $r1 = base_run($r["ptc"]);
+    L($r1["timer"]);
+    $t = $r1["token"];
+    $data = data_post($t, "one");
+    $r2 = base_run(host."ads/antibot", $data);
+    $token = $r2["json"]->token;
+    
+    if (!$token) {
+        continue;
+    }
+    print h.$r2["json"]->message;
     r();
-  }
+    $method = "recaptchav2";
+    $cap = multibot($method, $r1[$method], host);
+    
+    if (!$cap) {
+        continue;
+    }
+    
+    $data = http_build_query(array(
+        "captcha" => $method,
+        "g-recaptcha-response" => $cap,
+        $t[1][1] => $t[2][1],
+        $t[1][0] => $token
+    ));
+    
+    $r3 = base_run(str_replace("ads/view", "ads/verify", $r["ptc"]), $data);
+  
+    if (preg_match('#suc#is',$r3["notif"])) {
+        print text_line(h.$r3["notif"]);
+    } else {
+        print m.$r3["notif"];
+        r();
+    }
+  
 }
 
-daily_task:
-$r = base_run(host."tasks");
-#die(file_put_contents("response_body.html",$r["res"]));
-if($r["status"] == 403){
-  print m."cloudflare!".n;
-  new_save(host, true);
-  goto DATA;
-} elseif($r["account"]){
-  print m."cookie expired!".n;
-  new_save(host, true);
-  goto DATA;
+iframe:
+while(true) {
+    $r = base_run(host."iframe");
+    
+    if ($r["status"] == 403) {
+        print m."cloudflare!".n;
+        new_save(host, true);
+        goto DATA;
+    } elseif ($r["account"]) {
+        print m."cookie expired!".n;
+        new_save(host, true);
+        goto DATA;
+    } elseif (!$r["ptc"]) {
+        goto shortlinks;
+    }
+    $r1 = base_run($r["ptc"]);
+    L($r1["timer"]);
+    $method = "recaptchav2";
+    $cap = multibot($method, $r1[$method], host);
+    
+    if (!$cap) {
+        continue;
+    }
+    $rsp = array(
+        "captcha" => $method,
+        "g-recaptcha-response" => $cap
+    );
+    $data = data_post($r1["token"], "one", $rsp);
+    $r2 = base_run(str_replace("ads_ifr/frame", "ptc/verify", $r["ptc"]), $data);
+  
+    if (preg_match('#suc#is',$r2["notif"])) {
+        print text_line(h.$r2["notif"]);
+    } else {
+        print m.$r2["notif"];
+        r();
+    }
+  
 }
-$b = -1;
-while(true){
-  $b++;
-  if(!$r["mark"][$b]){
-    goto shortlinks;
-  }
-  if(preg_match('#disabled#is',$r["mark"][$b])){
-    continue;
-  }
-  L(5);
-  $r1 = base_run(host.$r["tasks_level"][$b]);
-  if(preg_match('#suc#is',$r1["notif"])){
-    print text_line(h.$r1["notif"]);
-  } else {
-    print m.$r1["notif"];
-    r();
-  }
-}
-
-
-
 
 shortlinks:
-while(true){
-  $r = base_run(host."links/?crypto=LTC&processor=ccpayment");
-  if($r["status"] == 403){
+while(true) {
+    $r = base_run(host."links/?crypto=LTC&processor=ccpayment");
+    
+    if ($r["status"] == 403) {
+        print m."cloudflare!".n;
+        new_save(host, true);
+        goto DATA;
+    } elseif ($r["account"]) {
+        print m."cookie expired!".n;
+        new_save(host, true);
+        goto DATA;
+    }
+    $bypas = visit_short($r);
+    
+    if ($bypas == "refresh") {
+        continue;
+    } elseif (!$bypas) {
+        goto achievements;
+    }
+    $r1 = base_run($bypas);
+    
+    if (preg_match('#been#is',$r1["notif"])) {
+        text_line(h.$r1["notif"]);
+        ket("balance",$r1["balance"]).line();
+    } else {
+        print m.$r1["notif"];
+        r();
+    }
+}
+
+achievements:
+$r = base_run(host."achievements");
+
+if ($r["status"] == 403) {
     print m."cloudflare!".n;
     new_save(host, true);
     goto DATA;
-  } elseif($r["account"]){
+} elseif ($r["account"]) {
     print m."cookie expired!".n;
     new_save(host, true);
     goto DATA;
-  }
-  $bypas = visit_short($r);
-  if($bypas == "refresh"){
-    continue;
-  } elseif(!$bypas){exit;
-    goto auto;
-  }
-  $r1 = base_run($bypas);
-  if(preg_match('#been#is',$r1["notif"])){
-    text_line(h.$r1["notif"]);
-    ket("balance",$r1["balance"]).line();
-  } else {
-    print m.$r1["notif"];
-    r();
-  }
 }
 
+for ($v = 0; $v < count($r["count"]); $v++) {
 
-auto:
-$r = base_run(host);#die(print_r($r));
-if($r["status"] == 403){
-  print m."cloudflare!".n;
-  new_save(host, true);
-  goto DATA;
-} elseif($r["account"]){
-  print m."cookie expired!".n;
-  new_save(host, true);
-  goto DATA;
-} elseif(!$r["token"]){
-  goto auto;
-}
-$rsp = array("coins" => "usdt");
-$data = data_post($r["token"], "null");
-$n = 0;
-while(true){
-  $n++;
-  if($n == 2){
-    unset($data);
-  }
-  if(diff_time(2, "7:01") == 1){
-    goto home;
-  }
-  $r = base_run(host."start", $data);
-  if($r["status"] == 403){
-    print m."cloudflare!".n;
-    new_save(host, true);
-    goto DATA;
-  } elseif($r["account"]){
-    print m."cookie expired!".n;
-    new_save(host, true);
-    goto DATA;
-  } elseif(!$r["timer"]){
-    continue;
-  }
-  tmr(2, $r["timer"]);
-  $js = base_run(host."internal-api/payout/")["json"];
-  if($js->success == true){
-    ket("balance",number_format($js->balance)." ACP");
-    ket("reward",$js->logs->USDT." Satoshi USDT");
-    ket("time_left",$js->time_left);
-    line();
-  }
+     if (explode("/", $r["count"][$v])[0] >= explode("/", $r["count"][$v])[1]) {
+        $t = $r["token"];
+        
+        if ($t) {
+            $data = data_post($t, "null");
+        }
+        $r1 = base_run($r["redirect"][$v], $data);
+
+        if (preg_match('#been#is',$r1["notif"])) {
+            text_line(h.$r1["notif"]);
+            ket("balance",$r1["balance"]).line();
+        }
+        goto achievements;
+     }
 }
 
-function base_run($url, $data = 0, $xml = 0){
+function base_run($url, $data = 0, $xml = 0) {
     global $host;
-    $header = head_fire($xml);
+    $header = head($xml);
     $r = curl($url,$header,$data,true,false);
     unset($header);
     #$r[1] = file_get_contents("instan.html");
-    #die(file_put_contents("response_body.html",$r[1]));
+    #die(file_put_contents("instan.html",$r[1]));
     $json = json_decode(base64_decode($r[1]));
     
-    if (!$json){
+    if (!$json) {
         $json = $r[2];
     }
   
@@ -256,56 +265,32 @@ function base_run($url, $data = 0, $xml = 0){
     
     preg_match('/location\.href\s*=\s*["\']([^"\']+)["\'];/', $r[1], $location);
   
-  preg_match_all('#<input type="hidden" name="(.*?)" value="(.*?)">#is',$r[1],$token);
-  preg_match('#(retry after|back after) ([0-9]*) (seconds|minutes)#is',$r[1],$timer);
-  preg_match("#(Login using cwallet or Faucetpay)#is",$r[1],$account);
-  preg_match_all('#(class="fs-4 fw-8 mb-6 text-white">|class="col-6 text-black text-center">|class="col-6 bg-warning text-black">)(.*?)<#is',$r[1],$info);
-  
-  preg_match('#Claim Rewards (.*?)<#is',$r[1],$claim_reward);
-  preg_match_all('#<a href="/((levels?[a-zA-Z0-9-=?&]*claim[a-zA-Z0-9-=&]*)|(tasks?[a-z-\/]*collect[0-9-\/]*))#is',$r[1],$tasks_level);
-  preg_match_all('#\d+/\d+#is',str_replace(['</span>','<bstyle="color:#00b8a5">'],"",trimed($r[1])),$part);
-  preg_match_all('#class="btn waves-effect waves-light collect(.*?)"#is',$r[1],$mark);
-  preg_match("#captcha-recaptcha','(.*?)'#is",$r[1],$recaptcha);
-  preg_match("#captcha-hcaptcha','(.*?)'#is",$r[1],$hcaptcha);  
-  preg_match('#challenge.script(.*?)k=(.*?)"#is',$r[1],$solvemedia);
-  preg_match_all('#<input name="(.*?)" type="radio" id="select-(.*?)"#is',$r[1],$type);
-  
-  print p;
-  return [
-    "account" => $account,
-    "res" => $r[1],
-    "json" => $json,
-    "visit" => $visit,
-    "left" => $left,
-    "name" => $name,
-    "username" => ltrim(rtrim($info[2][0])),
-    "balance" => ltrim(rtrim($info[2][1]))." / ".ltrim(rtrim($info[2][2])),
-    "token" => $token,
-    "timer" => $timer[2],
-    "notif" => $notif,
-    "claim_reward" => preg_replace("/[^0-9]/","",$claim_reward[1]),
-    "tasks_level" => $tasks_level[1],
-    "mark" => $mark[0],
-    "private_solvemedia" => $solve,
-    "recaptcha" => $recaptcha[1],
-    "hcaptcha" => $hcaptcha[1],
-    "type" => $type,
-    "url1" => $location[1],
-    "url" => $r[0][0]["location"]
+    preg_match_all('#<input type="hidden" name="(.*?)" value="(.*?)">#is',$r[1],$token);
+    preg_match('#var timer = (.*?);#is',$r[1],$timer);
+    preg_match("#(Login using cwallet or Faucetpay)#is",$r[1],$account);
+    preg_match_all('#(class="fs-4 fw-8 mb-6 text-white">|class="col-6 text-black text-center">|class="col-6 bg-warning text-black">)(.*?)<#is',$r[1],$info);
+    preg_match("#window.location = '(.*?)'#is",$r[1],$ptc);
+    preg_match('#g-recaptcha" data-sitekey="(.*?)"#is', $r[1],$recaptchav2);
+    preg_match_all("#(https?:\/\/[a-z0-9\/.-]*)(verify|ptc\/view|achievements\/claim|firewall*)(\/?[a-z0-9\/-]*)(.*?)#is", $r[1], $redirect);
+    preg_match_all('#class="(fafa-times|farfa-check-circle)"></i>(.*?)<#is', trimed($r[1]), $count);
+    print p;
+    return [
+        "account" => $account,
+        "res" => $r[1],
+        "json" => $json,
+        "visit" => $visit,
+        "left" => $left,
+        "name" => $name,
+        "username" => ltrim(rtrim($info[2][0])),
+        "balance" => ltrim(rtrim($info[2][1]))." / ".ltrim(rtrim($info[2][2])),
+        "token" => $token,
+        "timer" => $timer[1],
+        "notif" => $notif,
+        "ptc" => $ptc[1],
+        "recaptchav2" => $recaptchav2[1],
+        "url1" => $location[1],
+        "url" => $r[0][0]["location"],
+        "redirect" => $redirect[0],
+        "count" => $count[2]
     ];
-}
-
-function head_fire($xml = false){
-  global $u_a, $u_c;
-  $header = array();
-  $header[] = "Host: ".explode("/",host)[2];
-  $header[] = "referer: ".host;
-  $header[] = "user-agent: ".$u_a;
-  if($xml){
-    $header[] = "x-requested-with: XMLHttpRequest";
-  }
-  if($u_c){
-    $header[] = "cookie: ".$u_c;
-  }
-  return $header;
 }
