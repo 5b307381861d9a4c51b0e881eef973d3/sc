@@ -17,18 +17,26 @@ if (!$eval) {
             break;
         }
     }
-    eval(str_replace('<?php', "", str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
+    eval(str_replace('<?php',"",str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
+}
+
+$host = "excentiv.com";
+ket(1, "new url", 2, "old url");
+$tx = tx("number", 1);
+if ($tx == 1) {
+   new_save($host, true);
 }
 
 DATA:
-$u_a = save("useragent");
-$url = save("url_offerwall_excentiv.com");
+$u_a = new_save("user-agent")["user-agent"];
+$url = new_save($host)[$host];
+
 parse_str(str_replace("?", "&", $url), $out);
 $key = $out["key"];
 $userid = $out["userid"];
 
 if (stripos($url, "userid") === false) {
-    unlink("url_offerwall_excentiv.com");
+    new_save($host, true);
     print m."masukan url dengan benar!".n;
     goto DATA;
 }
@@ -41,7 +49,7 @@ ket("userid", $userid, "key", $key).line();
 print n;
 
 while(true) {
-    unlink("ofer.txt");
+    unlink($host);
     $r = base_run(host."offerwall/links?key=$key&userid=$userid");    
     
     if ($r["status"] == 403) {
