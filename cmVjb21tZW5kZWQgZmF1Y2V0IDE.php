@@ -21,7 +21,6 @@ if (!$eval) {
 }
 
 
-
 go:
 c();
 
@@ -59,6 +58,7 @@ $web = [
     "feyorra.site",
     "kiddyearner.com",
     "free-ltc-info.com",
+    "claimercorner.xyz/web",
     "banfaucet.com",
 ];
 
@@ -361,6 +361,8 @@ for ($i = 0; $i <= count($link); $i++) {
 }
 
 if (!$auto) {
+    date_default_timezone_set('Asia/Jakarta');
+    print c.date('Y-m-d H:i:s').n;
     lah(2, $redirect);
     goto awalan;
 }
@@ -383,6 +385,8 @@ while (true) {
     }
 
     if ($r["limit"]) {
+        date_default_timezone_set('Asia/Jakarta');
+        print c.date('Y-m-d H:i:s').n;
         lah();
         goto awalan;
     }
@@ -488,9 +492,9 @@ function base_run($url, $data = 0) {
     preg_match('#"g-recaptcha" data-sitekey="(.*?)"#is', $r[1], $recaptchav2);
     preg_match('#h-captcha" data-sitekey="(.*?)"#is', $r[1], $hcaptcha);
     preg_match('#grecaptcha.execute"(.*?)"#is', str_replace("(", "", $r[1]), $recaptchav3);
-    preg_match('#(class="font-medium">|class="m-b-0"><strong>|class="d-none d-lg-inline-flex">|class="fa-solid fa-user-graduate me-2"></i>|class="text-primary"><p>|user-name-text">|fw-semibold">|key="t-henry">|class="font-size-15 text-truncate">)(.*?)(<)#is', str_replace(["#", 'flex">Notifications'], "", $r[1]), $username);
-    preg_match_all('#(<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<h5 >|<h5 class="font-15">|<h6>|class="text-muted font-weight-normal mb-0 w-100 text-truncate">|class="mb-2">|class="text-muted font-weight-medium">|class="">|class="text-muted mb-2">)(.*?)<(.*?)>([a-zA-Z0-9-, .]*)<#is', str_replace(["'", "Account"], "", $r[1]), $bal);
-
+    preg_match('#(class="font-size-15 text-truncate p-0 m-0">|class="font-medium">|class="m-b-0"><strong>|class="d-none d-lg-inline-flex">|class="fa-solid fa-user-graduate me-2"></i>|class="text-primary"><p>|user-name-text">|fw-semibold">|key="t-henry">|class="font-size-15 text-truncate">)(.*?)(<)#is', str_replace(["#", 'flex">Notifications', 'key="t-henry">Setting'], "", $r[1]), $username);
+    preg_match_all('#(<p class="text-muted p-0 m-0">|<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<h5 >|<h5 class="font-15">|<h6>|class="text-muted font-weight-normal mb-0 w-100 text-truncate">|class="mb-2">|class="text-muted font-weight-medium">|class="">|class="text-muted mb-2">)(.*?)<(.*?)>([a-zA-Z0-9-, .]*)<#is', str_replace(["'", "Account"], "", $r[1]), $bal);
+    
     for ($i = 0; $i < 30; $i++) {
         if (trim(strtolower($bal[2][$i])) == "balance") {
             $balance = $bal[4][$i];
@@ -527,6 +531,8 @@ function base_run($url, $data = 0) {
         $Attribute = "zoom-in box p-5";
     } elseif(preg_match("#(feyorra.site)#is", host)){
         $Attribute = "row flex-grow-1 align-items-center justify-content-between";
+    } elseif(preg_match("#(claimercorner.xyz/web)#is", host)){
+        $Attribute = "card card-body";
     }
     
     
