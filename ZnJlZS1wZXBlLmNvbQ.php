@@ -51,6 +51,17 @@ if ($x == 1) {
 }
 
 
+awalan:
+ket(1, "ptc", 2, "shortlinks");
+$tx = tx("number", 1);
+if ($tx == 1) {
+   goto ads;
+} elseif ($tx == 2) {
+   goto shortlinks;
+} else {
+    goto awalan;
+}
+print n;
 
 
 ads:
@@ -118,7 +129,7 @@ while(true) {
         new_save(host, true);
         goto DATA;
     } elseif (!$r["ptc"]) {
-        goto shortlinks;
+        goto achievements;
     }
     $r1 = base_run($r["ptc"]);
     L($r1["timer"]);
@@ -205,7 +216,7 @@ for ($v = 0; $v < count($r["count"]); $v++) {
         goto achievements;
      }
 }
-
+goto awalan;
 function base_run($url, $data = 0, $xml = 0) {
     global $host;
     $header = head($xml);
