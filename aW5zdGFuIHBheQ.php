@@ -2,6 +2,7 @@
 
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -74,7 +75,7 @@ if ($mt == 1) {
 }
 DATA:
 $email = new_save("email")["email"];
-$r = base_run(host);//die(print_r($r));
+$r = base_run(host);#die(print_r($r));
 
 if ($r["status"] == 403) {
     die(m."banned IP please airplane mode for a moment");
@@ -126,7 +127,7 @@ while(true) {
         $cookie = new_save(host)[explode("/", host)[2]];
     }
     $r1 = base_run($link);#die(file_put_contents("instan.html", $r1["res"]));
-    #die(print_r($link));
+    #die(print_r($r1));
     if ($r1["firewall"] || $r1["login"]) {
         unlink(cookie_only);
         if ($mt == 1) {
@@ -224,8 +225,14 @@ function base_run($url, $data = 0) {
     preg_match_all("#(fas fa-exclamation-circle></i>|alert-borderless'>|Toast.fire|Swal.fire|swal[(])(.*?)(<)#is", str_replace(['"'], '', $r[1]), $notif_1);
     
     foreach ($notif_1[2] as $notif_2) {
-    
-        if (strpos(strtolower($notif_2), "been") !== false || strpos(strtolower($notif_2), "`success`") !== false || strpos(strtolower($notif_2), "invalid") !== false || strpos(strtolower($notif_2), "key") !== false || strpos(strtolower($notif_2), "success") !== false) {
+        $keywords = array(
+            "been",
+            "`success`",
+            "invalid",
+            "key",
+            "success"
+        );
+        if (multi_strpos($notif_2, $keywords)) {
             preg_match_all('#(title|html):(.*?)(,|\n})#is', $notif_2, $notif_3);
             
             if (!$notif_3[2][0]) {
@@ -234,7 +241,7 @@ function base_run($url, $data = 0) {
             
             foreach ($notif_3[2] as $notif_4) {
             
-                if (strpos(strtolower($notif_4), "been") !== false || strpos(strtolower($notif_4), "`success`") !== false || strpos(strtolower($notif_4), "invalid") !== false || strpos(strtolower($notif_4), "key") !== false || strpos(strtolower($notif_4), "success") !== false) {
+                if (multi_strpos($notif_4, $keywords)) {
                     $notif = ltrim(preg_replace("/[^a-zA-Z0-9-!. ]/", "", $notif_4));
                 }
             }
@@ -261,7 +268,10 @@ function base_run($url, $data = 0) {
             for ($i = 0; $i < count($link); $i++) {
   
                 if (preg_match("#(link)#is", $link[$i])) {
-                    $lin[] = $link[$i];
+                    if (strpos($link[$i], "http") === false) {
+                        $host = host."/";
+                    }
+                    $lin[] = str_replace("///", "/", host.$link[$i]);
                     $tl[] = $list[$i];
                 }
             }
@@ -275,7 +285,7 @@ function base_run($url, $data = 0) {
     }
     preg_match_all('#[a-z]*:\/\/[a-zA-Z0-9\/-\/.-]*\/go\/?[a-zA-Z0-9\/-\/.]*#is', $r[1], $visit);
     preg_match_all('#>(\d+\/+\d+)#is', trimed($r[1]), $left);
-    preg_match_all('#class="card-title mt-0">(.*?)<#is', str_replace('mt-0">Your', "", $r[1]), $name);
+    preg_match_all('#(class="card-title mt-0 text-white">|class="card-title mt-0">)(.*?)<#is', str_replace('mt-0">Your', "", $r[1]), $name);
     #die(print_r($name));
     preg_match("#firewall#is", $r[1], $firewall);
   
@@ -287,7 +297,7 @@ function base_run($url, $data = 0) {
          "empty" => $empty[0],
          "res" => $r[1],
          "token" => $token,
-         "name" => $name[1],
+         "name" => $name[2],
          "visit" => $visit[0],
          "left" => $left[1],
          "url1" => $r[0][0]["location"],
@@ -296,3 +306,5 @@ function base_run($url, $data = 0) {
      ], $methode);
 }
 
+
+#<h4 class="card-title mt-0 text-white">Clk.sh</h4>
