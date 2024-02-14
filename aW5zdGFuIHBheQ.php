@@ -1,7 +1,19 @@
 <?php
 
 
-
+function get_e($input) {
+    error_reporting(0);
+    
+    while (true) {
+        $string = file_get_contents($input);
+        
+        if (!$string) {
+            continue;
+        } else {
+            return $string;
+        }
+    }
+}
 
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
@@ -53,10 +65,10 @@ if (!$host) {
   goto go_home;
 }
 
-if ($host == "doge25.in" || $host == "onlyfaucet.com" || $host == "claimcoins.net" || $host == "chillfaucet.in" || $host == "zoomfaucet.com" || $host == "altcryp.com") {
+/*if ($host == "doge25.in" || $host == "onlyfaucet.com" || $host == "claimcoins.net" || $host == "chillfaucet.in" || $host == "zoomfaucet.com" || $host == "altcryp.com" || $host == "earncryptowrs.in" || $host == "chillfaucet.in") {
     $cancel = 1;
-}
-
+}*/
+$cancel = 1;
 eval(str_replace('name_host', explode(".", $host)[0],str_replace('example',  $host,'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="vie_free";')));
 
 
@@ -161,7 +173,7 @@ while(true) {
         print p."hallo kafir!";
         r();
     }
-    $t = time()+90;
+    $t = time() + 90;
     $bypass = visit_short($r1, $cancel);
    
     if ($bypass == "refresh" || $bypass == "skip") {
@@ -219,7 +231,8 @@ function base_run($url, $data = 0) {
     if (!$json) {
         $json = $r[2];
     }
-    preg_match("#(>Login<|Enter Your Faucet)#is", $r[1], $login);
+    #preg_match("#(>Login<|Enter Your Faucet)#is", $r[1], $login);
+    preg_match("#(>login<|>Signin<)#is", trimed($r[1]), $login);
     preg_match("#empty<#is", $r[1], $empty);
     preg_match_all('#<input type="hidden" name="(.*?)" id="token" value="(.*?)">#is', str_replace('name="anti', '', $r[1]), $token);
     preg_match_all("#(fas fa-exclamation-circle></i>|alert-borderless'>|Toast.fire|Swal.fire|swal[(])(.*?)(<)#is", str_replace(['"'], '', $r[1]), $notif_1);
@@ -271,7 +284,7 @@ function base_run($url, $data = 0) {
                     if (strpos($link[$i], "http") === false) {
                         $host = host."/";
                     }
-                    $lin[] = str_replace("///", "/", host.$link[$i]);
+                    $lin[] = str_replace("///", "/", $host.$link[$i]);#print_r($lin);
                     $tl[] = $list[$i];
                 }
             }
@@ -293,7 +306,7 @@ function base_run($url, $data = 0) {
      return array_merge([
          "status" => $r[0][1]["http_code"],
          "r" => $r[0][2],
-         "login" => $login[0],
+         "login" => $login[1],
          "empty" => $empty[0],
          "res" => $r[1],
          "token" => $token,
