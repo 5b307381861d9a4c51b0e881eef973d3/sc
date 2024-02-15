@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -266,7 +267,7 @@ function base_run($url, $data = 0) {
    
             for ($i = 0; $i < count($link); $i++) {
   
-                if (preg_match("#(link)#is", $link[$i])) {
+                if (preg_match("#(link)#is", $list[$i])) {
                     if (strpos($link[$i], "http") === false) {
                         $host = host."/";
                     }
@@ -283,7 +284,7 @@ function base_run($url, $data = 0) {
        $methode = [1 => 2];
     }
     preg_match_all('#[a-z]*:\/\/[a-zA-Z0-9\/-\/.-]*\/go\/?[a-zA-Z0-9\/-\/.]*#is', $r[1], $visit);
-    preg_match_all('#>(\d+\/+\d+)#is', trimed($r[1]), $left);
+    preg_match_all('#>(\d+\/+\d+)#is', str_replace("-", "", trimed($r[1])), $left);
     preg_match_all('#(class="card-title mt-0 text-white">|class="card-title mt-0">)(.*?)<#is', str_replace('mt-0">Your', "", $r[1]), $name);
     #die(print_r($name));
     preg_match("#firewall#is", $r[1], $firewall);
