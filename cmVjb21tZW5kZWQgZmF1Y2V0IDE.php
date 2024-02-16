@@ -58,6 +58,7 @@ $web = [
     "feyorra.site",
     "kiddyearner.com",
     "free-ltc-info.com",
+    "faucet-bit.com",
     "claimercorner.xyz/web",
     "banfaucet.com",
 ];
@@ -497,7 +498,7 @@ function base_run($url, $data = 0) {
     
     for ($i = 0; $i < 30; $i++) {
         if (trim(strtolower($bal[2][$i])) == "balance") {
-            $balance = $bal[4][$i];
+            $balance = "".$bal[4][$i]."";
             break;
         }
     }
@@ -509,36 +510,36 @@ function base_run($url, $data = 0) {
     preg_match_all('#hidden" name="(.*?)" value="(.*?)"#', str_replace('name="anti', '', $r[1]), $t_cs);
 
     preg_match('#(timer|wait*)( = *)(\d+)#is', $r[1], $tmr);
-    if(preg_match("#(keforcash.com)#is", host)){
+    if (preg_match("#(keforcash.com)#is", host)) {
         $Attribute = "card border p-0";
-    } elseif(preg_match("#(faucetspeedbtc.com)#is", host)){
+    } elseif (preg_match("#(faucetspeedbtc.com)#is", host)) {
         $Attribute = "card bg-metallic";
-    } elseif(preg_match("#(coinpayz.xyz)#is", host)){
+    } elseif (preg_match("#(coinpayz.xyz)#is", host)) {
         $Attribute = "card card-body text-center bg-metallic";
-    } elseif(preg_match("#(claimcoin.in|insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz|whoopyrewards.com)#is", host)){
+    } elseif (preg_match("#(claimcoin.in|insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz|whoopyrewards.com|faucet-bit.com)#is", host)) {
         $Attribute = "card card-body text-center";
-    } elseif(preg_match("#(fundsreward.com)#is", host)){
+    } elseif (preg_match("#(fundsreward.com)#is", host)) {
         $Attribute = "card card-body text-center bg-secondary rounded";
-    } elseif(preg_match("#(feyorra.top|claimtrx.com)#is", host)){
+    } elseif (preg_match("#(feyorra.top|claimtrx.com)#is", host)) {
         $Attribute = "col-md-6 col-lg-4 mb-3 mb-lg-0";
-    } elseif(preg_match("#(kiddyearner.com)#is", host)){
+    } elseif (preg_match("#(kiddyearner.com)#is", host)) {
         $Attribute = "claim-card";
-    } elseif(preg_match("#(banfaucet.com)#is", host)){
+    } elseif (preg_match("#(banfaucet.com)#is", host)) {
         $Attribute = "col-lg-6 col-xl-4";
-    } elseif(preg_match("#(bitmonk.me)#is", host)){
+    } elseif (preg_match("#(bitmonk.me)#is", host)) {
         $Attribute = "col-xxl-3 col-sm-6 project-card";
-    } elseif(preg_match("#(free-ltc-info.com)#is", host)){
+    } elseif (preg_match("#(free-ltc-info.com)#is", host)) {
         $Attribute = "zoom-in box p-5";
-    } elseif(preg_match("#(feyorra.site)#is", host)){
+    } elseif (preg_match("#(feyorra.site)#is", host)) {
         $Attribute = "row flex-grow-1 align-items-center justify-content-between";
-    } elseif(preg_match("#(claimercorner.xyz/web)#is", host)){
+    } elseif (preg_match("#(claimercorner.xyz/web)#is", host)) {
         $Attribute = "card card-body";
     }
     
     
     
     
-    if(preg_match("#(".$Attribute.")#is", $r[1])){
+    if (preg_match("#(".$Attribute.")#is", $r[1])) {
         $dom = new DOMDocument;
         $dom->loadHTML(str_replace('Remaining', '', $r[1]));
         $entries = $dom->getElementsByTagName('div');
@@ -565,7 +566,7 @@ function base_run($url, $data = 0) {
                     }
                 }
                 
-                if(!$claimCountNode){
+                if (!$claimCountNode) {
                     $claimCountNode = $entry->getElementsByTagName('p')->item(0);
                 }
                 $claimCount = $claimCountNode ? trim($claimCountNode->nodeValue) : '';
