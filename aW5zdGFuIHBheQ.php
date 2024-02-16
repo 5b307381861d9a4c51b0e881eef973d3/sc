@@ -2,6 +2,7 @@
 
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -267,7 +268,7 @@ function base_run($url, $data = 0) {
    
             for ($i = 0; $i < count($link); $i++) {
   
-                if (preg_match("#(link)#is", $list[$i])) {
+                if (preg_match("#(link)#is", $link[$i])) {
                     if (strpos($link[$i], "http") === false) {
                         $host = host."/";
                     }
@@ -275,7 +276,9 @@ function base_run($url, $data = 0) {
                     $tl[] = $list[$i];
                 }
             }
-            $methode["links"] = [array_filter($tl),array_filter($lin)];
+            $methode["links"] = [
+            array_filter($tl),
+            array_filter($lin)];
         } else {
             $methode = [1 => 2];
         }
