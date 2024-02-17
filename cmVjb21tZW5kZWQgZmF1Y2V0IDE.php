@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -117,7 +118,7 @@ $rr = base_run("https://claimtrx.com/faucet/verify", $data);
 print($data);
 die(print_r($r["res"]));*/
 //$r = base_run(host."links");$bypass = new_visit($r);die(print_r($bypass));
-
+#$r = base_run(host . "links");die(print_r($r));
 dashboard:
 $redirect = "dashboard";
 $r = base_run(host . "dashboard");
@@ -544,7 +545,7 @@ function base_run($url, $data = 0) {
         $dom->loadHTML(str_replace('Remaining', '', $r[1]));
         $entries = $dom->getElementsByTagName('div');
         
-        foreach ($entries as $entry) {
+        foreach ($entries as $key => $entry) {
             $classAttribute = $entry->getAttribute('class');
             if (strpos($classAttribute, $Attribute) !== false) {
                 $titleNodeH2 = $entry->getElementsByTagName('h2')->item(0);
@@ -570,6 +571,7 @@ function base_run($url, $data = 0) {
                     $claimCountNode = $entry->getElementsByTagName('p')->item(0);
                 }
                 $claimCount = $claimCountNode ? trim($claimCountNode->nodeValue) : '';
+                
                 $visit[] = $claimLink;
                 //$left[] = $claimCount;        
             }
@@ -610,7 +612,20 @@ function base_run($url, $data = 0) {
         }
     }
     preg_match_all("#(https?:\/\/[a-z0-9\/.-]*)(verify|ptc\/view|achievements\/claim|firewall*)(\/?[a-z0-9\/-]*)(.*?)#is", $r[1], $redirect);
-
+    if (!$count[2][2]) {
+        
+        if ($name[2]) {
+            for ($i = 0; $i < count($name); $i++) {
+                preg_match_all('#disabled>Claim<|">claim<#is', trimed($r[1]), $mmk);
+                if (strpos($mmk[0][$i], '"') !== false) {
+                    $memek[] = "9999/9999";
+                } else {
+                    $memek[] = "0/1";
+                }
+            }
+            $count[2] = $memek;
+        }
+    }
     return [
         "status" => $r[0][1]["http_code"],
         "res" => $r[1],
@@ -640,17 +655,4 @@ function base_run($url, $data = 0) {
         "failed" => $failed[1],
         "redirect" => $redirect[0],
     ];
-}
-
-function h_x() {
-    global $u_a, $u_c;
-    $header = array();
-    if (!$u_a) {
-        $u_a = user_agent();
-    }
-    $header[] = "user-agent: " . $u_a;
-    if ($u_c) {
-        $header[] = "cookie: " . $u_c;
-    }
-    return $header;
 }
