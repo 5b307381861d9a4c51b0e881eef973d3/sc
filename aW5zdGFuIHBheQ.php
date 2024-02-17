@@ -1,6 +1,8 @@
 <?php
 
 
+
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -131,6 +133,7 @@ while(true) {
         unlink(cookie_only);
         if ($mt == 1) {
             new_save(host, true);
+            goto DATA;
         }
         print m . "Firewall!";
         r();
