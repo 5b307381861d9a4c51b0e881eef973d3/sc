@@ -1,7 +1,5 @@
 <?php
 
-
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -185,7 +183,7 @@ while (true) {
     }
 
     if ($r["status"] == 403) {
-        if (preg_match("#(keforcash.com|claimcoin.in|faucetcrypto.net|banfaucet.com|bitsfree.net|888satoshis.com)#is", host)) {
+        if (preg_match("#(whoopyrewards.com|keforcash.com|claimcoin.in|faucetcrypto.net|banfaucet.com|bitsfree.net|888satoshis.com)#is", host)) {
             if (preg_match("#http#is", $dark[0][0])) {
                 ket("info", m . "selamat datang di pasar gelap") . line();
                 goto dark;
