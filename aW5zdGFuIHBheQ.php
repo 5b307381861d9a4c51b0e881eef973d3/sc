@@ -2,7 +2,6 @@
 
 
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -85,6 +84,14 @@ if ($r["status"] == 403) {
 }
 $t = $r["token"];
 $array = array("wallet" => $email);
+
+if ($r["cap"][1][0]) {
+    $cap = multibot($r["cap"][1][0], $r["cap"][2][0], host);
+    $array = array_merge($array, 
+        array("captcha" => "turnstile", "cf-turnstile-response" => $cap)
+    );
+}
+
 $data = data_post($t, "null", $array);
 $r = base_run(host."auth/login", $data);
 
@@ -293,6 +300,7 @@ function base_run($url, $data = 0) {
     preg_match_all('#(class="card-title mt-0 text-white">|class="card-title mt-0">)(.*?)<#is', str_replace('mt-0">Your', "", $r[1]), $name);
     #die(print_r($name));
     preg_match("#firewall#is", $r[1], $firewall);
+    preg_match_all('#="(cf-turnstile)" data-sitekey="(.*?)"#is', $r[1], $cap);
   
      print p;
      return array_merge([
@@ -307,9 +315,10 @@ function base_run($url, $data = 0) {
          "left" => $left[1],
          "url1" => $r[0][0]["location"],
          "notif" => $notif,
-         "firewall" => $firewall[0]
+         "firewall" => $firewall[0],
+         "cap" => $cap
      ], $methode);
 }
-
+#cf-turnstile
 
 #<h4 class="card-title mt-0 text-white">Clk.sh</h4>
