@@ -1,7 +1,6 @@
 <?php
 
 
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -147,6 +146,13 @@ while(true) {
         $r = base_run(host);
         $t = $r["token"];
         $array = array("wallet" => $email);
+        
+        if ($r["cap"][1][0]) {
+            $cap = multibot($r["cap"][1][0], $r["cap"][2][0], host);
+            $array = array_merge($array, 
+                array("captcha" => "turnstile", "cf-turnstile-response" => $cap)
+            );
+        }
         $data = data_post($t, "null", $array);
         $r = base_run(host."auth/login", $data);
         continue;
