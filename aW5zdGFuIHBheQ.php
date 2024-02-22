@@ -35,7 +35,8 @@ $web = [
     "chillfaucet.in",
     "zoomfaucet.com",
     "altcryp.com",
-    "flashfaucet.xyz"
+    "flashfaucet.xyz",
+    "satoshifaucet.io"
 ];
   
 for ($i = 0; $i < count($web); $i++) {
