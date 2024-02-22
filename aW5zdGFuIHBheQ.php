@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -36,7 +37,8 @@ $web = [
     "zoomfaucet.com",
     "altcryp.com",
     "flashfaucet.xyz",
-    "satoshifaucet.io"
+    "satoshifaucet.io",
+    "coinjo.top"
 ];
   
 for ($i = 0; $i < count($web); $i++) {
