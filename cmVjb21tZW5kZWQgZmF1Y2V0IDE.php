@@ -1,5 +1,6 @@
 <?php
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -16,7 +17,7 @@ if (!$eval) {
             break;
         }
     }
-    eval(str_replace('<?php',"",str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))));
+    eval(str_replace('= 90;', "= 30;", str_replace('<?php', "", str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php")))));
 }
 
 
@@ -480,7 +481,7 @@ function base_run($url, $data = 0) {
     $header = head();#die(print_r($header));
     $r = curl($url, $header, $data, true, false);
     unset($header);
-    #$r[1] = file_get_contents("asu.html");
+    #$r[1] = file_get_contents("instan.html");
     #die(file_put_contents("asu.html", $r[1]));
     preg_match("#Just a moment#is", $r[1], $cf);
     #preg_match("#(login)#is", str_replace(["Login every", "login with", "Daily Login", "timewall.io/users/login"], "", $r[1]), $register);
@@ -578,7 +579,7 @@ function base_run($url, $data = 0) {
         $name = [];
         $visit = [];
     }
-    preg_match_all('#(>|\n)(\d+\/+\d+)#is', trimed(str_replace([str_split('({['), "Available View:", "-"], '', $r[1])), $count);
+    preg_match_all('#(>|\n)(-?\d+\/\d+)#is', trimed(str_replace([str_split('({['), "Available View:"], '', $r[1])), $count);#die(print_r($count));
     
     preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $r[1], $u_r);
     preg_match_all("#(https?:\/\/" . sc . "[a-z\/.-]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", $r[1], $link);
