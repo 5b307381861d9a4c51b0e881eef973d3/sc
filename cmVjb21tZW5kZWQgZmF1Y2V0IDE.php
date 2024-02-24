@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -62,8 +63,8 @@ $web = [
     "claimercorner.xyz/web",
     "cryptobigpay.online",
     "allfaucets.site",
-    "earn-pepe.com",
-    "banfaucet.com",
+    "almasat.net",
+    "earn-pepe.com"
 ];
 
 for ($i = 0; $i < count($web); $i++) {
@@ -187,7 +188,7 @@ while (true) {
     }
 
     if ($r["status"] == 403) {
-        if (preg_match("#(whoopyrewards.com|keforcash.com|claimcoin.in|faucetcrypto.net|banfaucet.com|bitsfree.net|888satoshis.com|earn-pepe.com)#is", host)) {
+        if (preg_match("#(whoopyrewards.com|keforcash.com|claimcoin.in|faucetcrypto.net|banfaucet.com|bitsfree.net|888satoshis.com|earn-pepe.com|free-ltc-info.com)#is", host)) {
             if (preg_match("#http#is", $dark[0][0])) {
                 ket("info", m . "selamat datang di pasar gelap") . line();
                 goto dark;
@@ -519,7 +520,7 @@ function base_run($url, $data = 0) {
         $Attribute = "card bg-metallic";
     } elseif (preg_match("#(coinpayz.xyz)#is", host)) {
         $Attribute = "card card-body text-center bg-metallic";
-    } elseif (preg_match("#(claimcoin.in|insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz|whoopyrewards.com|faucet-bit.com|cryptobigpay.online|allfaucets.site)#is", host)) {
+    } elseif (preg_match("#(claimcoin.in|insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz|whoopyrewards.com|faucet-bit.com|cryptobigpay.online|allfaucets.site|almasat.net)#is", host)) {
         $Attribute = "card card-body text-center";
     } elseif (preg_match("#(fundsreward.com)#is", host)) {
         $Attribute = "card card-body text-center bg-secondary rounded";
