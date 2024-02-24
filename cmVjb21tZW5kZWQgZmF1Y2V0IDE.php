@@ -60,6 +60,9 @@ $web = [
     "free-ltc-info.com",
     "faucet-bit.com",
     "claimercorner.xyz/web",
+    "cryptobigpay.online",
+    "allfaucets.site",
+    "earn-pepe.com",
     "banfaucet.com",
 ];
 
@@ -184,7 +187,7 @@ while (true) {
     }
 
     if ($r["status"] == 403) {
-        if (preg_match("#(whoopyrewards.com|keforcash.com|claimcoin.in|faucetcrypto.net|banfaucet.com|bitsfree.net|888satoshis.com)#is", host)) {
+        if (preg_match("#(whoopyrewards.com|keforcash.com|claimcoin.in|faucetcrypto.net|banfaucet.com|bitsfree.net|888satoshis.com|earn-pepe.com)#is", host)) {
             if (preg_match("#http#is", $dark[0][0])) {
                 ket("info", m . "selamat datang di pasar gelap") . line();
                 goto dark;
@@ -482,7 +485,7 @@ function base_run($url, $data = 0) {
     $r = curl($url, $header, $data, true, false);
     unset($header);
     #$r[1] = file_get_contents("instan.html");
-    #die(file_put_contents("asu.html", $r[1]));
+    #die(file_put_contents("instan.html", $r[1]));
     preg_match("#Just a moment#is", $r[1], $cf);
     #preg_match("#(login)#is", str_replace(["Login every", "login with", "Daily Login", "timewall.io/users/login"], "", $r[1]), $register);
     preg_match("#(>login<|>Signin<)#is", trimed($r[1]), $register);
@@ -494,7 +497,7 @@ function base_run($url, $data = 0) {
     preg_match('#h-captcha" data-sitekey="(.*?)"#is', $r[1], $hcaptcha);
     preg_match('#grecaptcha.execute"(.*?)"#is', str_replace("(", "", $r[1]), $recaptchav3);
     preg_match('#(class="font-size-15 text-truncate p-0 m-0">|class="font-medium">|class="m-b-0"><strong>|class="d-none d-lg-inline-flex">|class="fa-solid fa-user-graduate me-2"></i>|class="text-primary"><p>|user-name-text">|fw-semibold">|key="t-henry">|class="font-size-15 text-truncate">)(.*?)(<)#is', str_replace(["#", 'flex">Notifications', 'key="t-henry">Setting'], "", $r[1]), $username);
-    preg_match_all('#(<p class="text-muted p-0 m-0">|<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<h5 >|<h5 class="font-15">|<h6>|class="text-muted font-weight-normal mb-0 w-100 text-truncate">|class="mb-2">|class="text-muted font-weight-medium">|class="">|class="text-muted mb-2">)(.*?)<(.*?)>([a-zA-Z0-9-, .]*)<#is', str_replace(["'", "Account"], "", $r[1]), $bal);
+    preg_match_all('#(color:FFFFFF;font-size:20px">|<p class="text-muted p-0 m-0">|<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<h5 >|<h5 class="font-15">|<h6>|class="text-muted font-weight-normal mb-0 w-100 text-truncate">|class="mb-2">|class="text-muted font-weight-medium">|class="">|class="text-muted mb-2">)(.*?)<(.*?)>([a-zA-Z0-9-, .]*)<#is', str_replace(["'", "Account", "#"], "", $r[1]), $bal);
     
     for ($i = 0; $i < 30; $i++) {
         if (trim(strtolower($bal[2][$i])) == "balance") {
@@ -503,7 +506,7 @@ function base_run($url, $data = 0) {
         }
     }
     if (!$balance) {
-        preg_match('#(<div class="text-3xl font-medium leading-8 mt-6">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","", $r[1]), $ball);
+        preg_match('#(<h3 class="mb-4 mt-8">|<div class="text-3xl font-medium leading-8 mt-6">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","", $r[1]), $ball);
         $balance = $ball[2];
     }
 
@@ -516,7 +519,7 @@ function base_run($url, $data = 0) {
         $Attribute = "card bg-metallic";
     } elseif (preg_match("#(coinpayz.xyz)#is", host)) {
         $Attribute = "card card-body text-center bg-metallic";
-    } elseif (preg_match("#(claimcoin.in|insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz|whoopyrewards.com|faucet-bit.com)#is", host)) {
+    } elseif (preg_match("#(claimcoin.in|insfaucet.xyz|chillfaucet.in|queenofferwall.com|liteearn.com|hatecoin.me|wincrypt2.com|nobitafc.com|bitupdate.info|newzcrypt.xyz|hfaucet.com|mezo.live|claimcash.cc|cashbux.work|claimbitco.in|litefaucet.in|cryptoviefaucet.com|freebinance.top|faucetcrypto.net|freesolana.top|bitsfree.net|888satoshis.com|earnfreebtc.io|bambit.xyz|whoopyrewards.com|faucet-bit.com|cryptobigpay.online|allfaucets.site)#is", host)) {
         $Attribute = "card card-body text-center";
     } elseif (preg_match("#(fundsreward.com)#is", host)) {
         $Attribute = "card card-body text-center bg-secondary rounded";
@@ -530,7 +533,7 @@ function base_run($url, $data = 0) {
         $Attribute = "col-xxl-3 col-sm-6 project-card";
     } elseif (preg_match("#(free-ltc-info.com)#is", host)) {
         $Attribute = "zoom-in box p-5";
-    } elseif (preg_match("#(feyorra.site)#is", host)) {
+    } elseif (preg_match("#(feyorra.site|earn-pepe.com)#is", host)) {
         $Attribute = "row flex-grow-1 align-items-center justify-content-between";
     } elseif (preg_match("#(claimercorner.xyz/web)#is", host)) {
         $Attribute = "card card-body";
