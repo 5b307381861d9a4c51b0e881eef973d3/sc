@@ -1,0 +1,55 @@
+<?php
+
+function get_e($input) {
+    error_reporting(0);
+    while (true) {
+        $string = file_get_contents($input);
+        if (!$string) {
+            continue;
+        } else {
+            return $string;
+        }
+    }
+}
+
+if (!$eval) {
+    eval(str_replace('<?php', "", get_e("build_index.php")));
+    $reques = array(
+        1 => "xevil", 2 => "multibot"
+    );
+    ket(1, "xevil", 2, "multibot");
+    
+    while(true) {
+        $inp = tx("number", 1);
+      
+        if ($inp == 0) {
+            continue;
+        } elseif (2 >= $inp) {
+            break;
+        }
+    }
+    eval(str_replace('= 90;', "= 30;", str_replace('<?php', "", str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php")))));
+}
+memek:
+if (!get_e("link_sl")) {
+    print m."file tidak di temukan buatlah file (link_sl) tolol".n;
+    goto memek;
+}
+$apikey = trimed(array_filter(file("link_sl"))[0]);
+$nomor = 0;
+while ($nomor <= count($base)) {
+    if (!$base[$nomor]) {
+        $nomor = 0;
+    }
+    $only_sl = $base[$nomor];
+    print k.$only_sl.n;
+    $r = bypass_shortlinks($only_sl);
+    
+    if ($r->status == "success") {
+        print_r($r);
+    } else {
+        print m."invalid!".n;
+    }
+    line();
+    $nomor++;
+}
