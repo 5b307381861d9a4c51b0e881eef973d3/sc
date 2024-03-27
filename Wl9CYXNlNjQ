@@ -1,5 +1,16 @@
 <?php
 
+function get_e($input) {
+    error_reporting(0);
+    while (true) {
+        $string = file_get_contents($input);
+        if (!$string) {
+            continue;
+        } else {
+            return $string;
+        }
+    }
+}
 
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
@@ -33,7 +44,8 @@ $nomor = 0;
 while ($nomor <= count($base)) {
     $only_sl = trimed($base[$nomor]);
     if (!$only_sl) {
-        $nomor = 0;
+        goto memek;
+        #$nomor = 0;
     }
     
     if (count(array_filter(file("link_sl"))) !== count($base)) {
@@ -42,7 +54,7 @@ while ($nomor <= count($base)) {
     
     print k.$only_sl.n;
     $r = bypass_shortlinks($only_sl);
-    
+
     if ($r->status == "success") {
         print_r($r);
     } else {
