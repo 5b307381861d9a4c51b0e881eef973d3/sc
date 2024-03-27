@@ -31,28 +31,42 @@ if (!$eval) {
     eval(str_replace('= 90;', "= 30;", str_replace('<?php', "", str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php")))));
 }
 memek:
-if (!file_get_contents("link_sl")) {
-    print m."file tidak di temukan buatlah file (link_sl) tolol";
-    r();
-    sleep(5);
+if (!file_get_contents("link_sl.php")) {
+    print p.base64_decode("ZmlsZSBpbmNsdWRlIHRpZGFrIGRpIHRlbXVrYW4gYnVhdGxhaCBmaWxlIChsaW5rX3NsLnBocCkgdG9sb2wKCmNvbnRvaDoKCjxwaHAKCiRhcnJheSA9IGFycl9yYW5kKFsKICAgIFsicmV2Y3V0Lm5ldCIsICJhcGlrZXltdSJdLAogICAgWyJjdXRsaW5rLnh5eiIsICJhcGlrZXltdSJdLAogICAgWyJiaXRhZC5vcmciLCAiYXBpa2V5bXUiXSwKICAgIFsidXJsY3V0LnBybyIsICJhcGlrZXltdSJdLAogICAgWyJmYWhvLnVzIiwgImFwaWtleW11Il0sCiAgICBbImlubGlua3Mub25saW5lIiwgImFwaWtleW11Il0KXSk7").n;
+    tx("enter to continue");
+    c();
     goto memek;
 }
+include("link_sl.php");
+$x = 0;
+while ($x <= count($array)) {
 
-$base = arr_rand(array_filter(file("link_sl")));
-#die(print_r($base));
+    if (!$array[0][1] || !$array[0][0]) {
+        unlink("link_sl.php");
+        goto memek;
+    }
+    if (!$array[$x][1]) {
+        break;
+    }
+    $hasil = curl("https://".$array[$x][0]."/api?api=".$array[$x][1]."&url=".urlencode('https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32))))[2];
+    
+    if($hasil->status == "success") {
+        $link[] = $hasil->shortenedUrl;
+    }
+    $x++;
+}
+
+$url = array_filter($link);
 $nomor = 0;
-while ($nomor <= count($base)) {
-    $only_sl = trimed($base[$nomor]);
+while ($nomor <= count($url)) {
+    $only_sl = trimed($url[$nomor]);
+    
     if (!$only_sl) {
-        goto memek;
-        #$nomor = 0;
-    }
-    
-    if (count(array_filter(file("link_sl"))) !== count($base)) {
+        unset($link);
         goto memek;
     }
-    
-    print k.$only_sl.n;
+    print k."host: ".$array[$nomor][0].n;
+    print k."link: ".$only_sl.n;
     $r = bypass_shortlinks($only_sl);
 
     if ($r->status == "success") {
