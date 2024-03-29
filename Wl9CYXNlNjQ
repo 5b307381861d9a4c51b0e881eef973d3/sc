@@ -1,16 +1,5 @@
 <?php
 
-function get_e($input) {
-    error_reporting(0);
-    while (true) {
-        $string = file_get_contents($input);
-        if (!$string) {
-            continue;
-        } else {
-            return $string;
-        }
-    }
-}
 
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
@@ -38,13 +27,14 @@ if (!file_get_contents("link_sl.php")) {
     goto memek;
 }
 include("link_sl.php");
+if (!$array[0][1] || !$array[0][0]) {
+    unlink("link_sl.php");
+    goto memek;
+}
 $x = 0;
 while ($x <= count($array)) {
 
-    if (!$array[0][1] || !$array[0][0]) {
-        unlink("link_sl.php");
-        goto memek;
-    }
+    
     if (!$array[$x][1]) {
         break;
     }
