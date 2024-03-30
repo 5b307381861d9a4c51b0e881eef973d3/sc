@@ -42,6 +42,8 @@ while ($x <= count($array)) {
     
     if($hasil->status == "success") {
         $link[] = $hasil->shortenedUrl;
+    } else {
+        $link[] = "";
     }
     $x++;
 }
