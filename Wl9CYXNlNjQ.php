@@ -1,24 +1,5 @@
 <?php
 
-
-if (!$eval) {
-    eval(str_replace('<?php', "", get_e("build_index.php")));
-    $reques = array(
-        1 => "xevil", 2 => "multibot"
-    );
-    ket(1, "xevil", 2, "multibot");
-    
-    while(true) {
-        $inp = tx("number", 1);
-      
-        if ($inp == 0) {
-            continue;
-        } elseif (2 >= $inp) {
-            break;
-        }
-    }
-    eval(str_replace('= 90;', "= 30;", str_replace('<?php', "", str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php")))));
-}
 memek:
 if (!file_get_contents("link_sl.php")) {
     print p.base64_decode("ZmlsZSBpbmNsdWRlIHRpZGFrIGRpIHRlbXVrYW4gYnVhdGxhaCBmaWxlIChsaW5rX3NsLnBocCkgdG9sb2wKCmNvbnRvaDoKCjxwaHAKCiRhcnJheSA9IGFycl9yYW5kKFsKICAgIFsicmV2Y3V0Lm5ldCIsICJhcGlrZXltdSJdLAogICAgWyJjdXRsaW5rLnh5eiIsICJhcGlrZXltdSJdLAogICAgWyJiaXRhZC5vcmciLCAiYXBpa2V5bXUiXSwKICAgIFsidXJsY3V0LnBybyIsICJhcGlrZXltdSJdLAogICAgWyJmYWhvLnVzIiwgImFwaWtleW11Il0sCiAgICBbImlubGlua3Mub25saW5lIiwgImFwaWtleW11Il0KXSk7").n;
@@ -42,8 +23,6 @@ while ($x <= count($array)) {
     
     if($hasil->status == "success") {
         $link[] = $hasil->shortenedUrl;
-    } else {
-        $link[] = "";
     }
     $x++;
 }
