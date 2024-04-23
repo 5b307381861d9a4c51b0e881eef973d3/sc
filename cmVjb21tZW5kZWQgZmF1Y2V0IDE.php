@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
@@ -80,6 +81,7 @@ if (!$host) {
     goto go;
 }
 
+
 eval(str_replace('name_host', explode(".", $host)[0], str_replace('example', $host, 'const host="https://example/",sc="name_host",cookie_only="cookie_example",mode="vie_free";')));
 
 
@@ -127,7 +129,11 @@ dashboard:
 $redirect = "dashboard";
 $r = base_run(host . "dashboard");
 $link = $r["link"];
-#die(print_r($r));
+if (preg_match("#newzcrypt.xyz#is", $host)) {
+    $link = ["https://newzcrypt.xyz/links"];
+}
+
+#die(print_r($link));
 
 //goto faucet;
 if ($r["status"] == 403) {
@@ -158,8 +164,10 @@ ket("balance", $r["balance"]).line();
 shortlinks:
 $redirect = "shortlinks";
 
+#die(print_r($link));
 for ($i = 0; $i <= count($link); $i++) {
     if (preg_match("#(link)#is", $link[$i])) {
+    
         $shortlinks = $link[$i];
         break;
     }
@@ -484,9 +492,9 @@ while (true) {
 
 function base_run($url, $data = 0) {
     $header = head();#die(print_r($header));
-    $r = curl($url, $header, $data, true, false);
+    $r = curl($url, $header, $data, true);
     unset($header);
-    #$r[1] = file_get_contents("instan.html");
+    #$r[1] = file_get_contents("f.html");
     #die(file_put_contents("instan.html", $r[1]));
     preg_match("#Just a moment#is", $r[1], $cf);
     #preg_match("#(login)#is", str_replace(["Login every", "login with", "Daily Login", "timewall.io/users/login"], "", $r[1]), $register);
@@ -499,7 +507,7 @@ function base_run($url, $data = 0) {
     preg_match('#h-captcha" data-sitekey="(.*?)"#is', $r[1], $hcaptcha);
     preg_match('#grecaptcha.execute"(.*?)"#is', str_replace("(", "", $r[1]), $recaptchav3);
     preg_match('#(class="font-size-15 text-truncate p-0 m-0">|class="font-medium">|class="m-b-0"><strong>|class="d-none d-lg-inline-flex">|class="fa-solid fa-user-graduate me-2"></i>|class="text-primary"><p>|user-name-text">|fw-semibold">|key="t-henry">|class="font-size-15 text-truncate">)(.*?)(<)#is', str_replace(["#", 'flex">Notifications', 'key="t-henry">Setting'], "", $r[1]), $username);
-    preg_match_all('#(color:FFFFFF;font-size:20px">|<p class="text-muted p-0 m-0">|<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<h5 >|<h5 class="font-15">|<h6>|class="text-muted font-weight-normal mb-0 w-100 text-truncate">|class="mb-2">|class="text-muted font-weight-medium">|class="">|class="text-muted mb-2">)(.*?)<(.*?)>([a-zA-Z0-9-, .]*)<#is', str_replace(["'", "Account", "#"], "", $r[1]), $bal);
+    preg_match_all('#(<option selected disabled>|color:FFFFFF;font-size:20px">|<p class="text-muted p-0 m-0">|<h6 class="text-gray-700 rajdhani-600 mb-0 lh-18 ms-0 font-sm dark-text">|<h5 >|<h5 class="font-15">|<h6>|class="text-muted font-weight-normal mb-0 w-100 text-truncate">|class="mb-2">|class="text-muted font-weight-medium">|class="">|class="text-muted mb-2">)(.*?)<(.*?)>([a-zA-Z0-9-, .]*)<#is', str_replace(["'", "Account", "#"], "", $r[1]), $bal);
     
     for ($i = 0; $i < 30; $i++) {
         if (trim(strtolower($bal[2][$i])) == "balance") {
@@ -508,7 +516,7 @@ function base_run($url, $data = 0) {
         }
     }
     if (!$balance) {
-        preg_match('#(<h3 class="mb-4 mt-8">|<div class="text-3xl font-medium leading-8 mt-6">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","", $r[1]), $ball);
+        preg_match('#(<h2 class="mb-2 number-font">|<h3 class="mb-4 mt-8">|<div class="text-3xl font-medium leading-8 mt-6">|<div class="balance">\n<p>|<div class="top-balance">\n<p>|class="acc-amount"><i class="fas fa-coins"></i>|class="acc-amount"><i class="fas fa-coins"></i>|class="fas fa-dollar-sign"></i>|<option selected=>)(.*?)(<)#is', str_replace("'","", $r[1]), $ball);
         $balance = $ball[2];
     }
 
@@ -586,7 +594,7 @@ function base_run($url, $data = 0) {
     preg_match_all('#(>|\n)(-?\d+\/\d+)#is', trimed(str_replace([str_split('({['), "Available View:"], '', $r[1])), $count);#die(print_r($count));
     
     preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $r[1], $u_r);
-    preg_match_all("#(https?:\/\/" . sc . "[a-z\/.-]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", $r[1], $link);
+    preg_match_all("#(https?:\/\/" . sc . "[a-z\/.-]*)(\/auto|\/faucet|\/ptc|\/links|\/shortlinks|\/achievements)#is", str_replace("/plugin/auto", "", $r[1]), $link);
     preg_match_all("#(fas fa-exclamation-circle></i>|alert-borderless'>|Toast.fire|Swal.fire|swal[(]|`success`)(.*?)(<)#is", str_replace('"', '', $r[1]), $notif_1);
     
     foreach ($notif_1[2] as $notif_2) {
@@ -632,6 +640,7 @@ function base_run($url, $data = 0) {
     return [
         "status" => $r[0][1]["http_code"],
         "res" => $r[1],
+        "t" => $r[0][1],
         "r" => $r[0][2],
         "register" => $register[1],
         "antb" => $antb[1],
