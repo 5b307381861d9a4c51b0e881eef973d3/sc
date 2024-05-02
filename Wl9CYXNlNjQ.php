@@ -69,7 +69,7 @@ while ($nomor <= count($url)) {
     $r = bypass_shortlinks($only_sl);
     
     if ($r->status !== "success") {
-        if (2 >= $n) {
+        if (0 >= $n) {
             goto b;
         }
     }
