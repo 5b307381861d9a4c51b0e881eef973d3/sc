@@ -18,6 +18,7 @@ if (!$eval) {
     }
     eval(str_replace('seconds = 90', 'seconds = 5', str_replace('<?php',"", str_replace("mode_proxy", $method_proxy, str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))))));
 }
+define('bypassed', 'bypassed');
 memek:
 if (!file_get_contents("link_sl.php")) {
     print p.base64_decode("PD9waHAgJGxpbmsgPSBhcnJheSgpOwkbGlzdF9hcnJheSA9IFsNCgkJWyJkb21haW4iLCAiYXBpa2V5Il0sDQoJWyJkb21haW4iLCAiYXBpa2V5Il0sDQoJWyJkb21haW4iLCAiYXBpa2V5Il0sDQoJWyJkb21haW4iLCAiYXBpa2V5Il0sDQoJXTsNCg==").n;
