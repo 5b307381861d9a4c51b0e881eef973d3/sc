@@ -49,8 +49,6 @@ while ($x <= count($array)) {
     
     if($hasil->status == "success") {
         $link[] = $hasil->shortenedUrl;
-    } else {
-        $link[] = "skip";
     }
     $x++;
 }
@@ -63,8 +61,6 @@ while ($nomor <= count($url)) {
     if (!$only_sl) {
         unset($link);
         goto memek;
-    } elseif ($only_sl == "skip") {
-        continue;
     }
     print k."host: ".$array[$nomor][0].n;
     print k."link: ".$only_sl.n;
