@@ -30,7 +30,7 @@ if (!file_get_contents($name_file)) {
 }
 $array_file = file($name_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 $array = arr_rand($array_file);
-if (strpos($array[0], "api") === false) {
+if (strpos($array[0], "api=") === false) {
     unlink($name_file);
     goto memek;
 }
@@ -65,6 +65,7 @@ $nomor = 0;
 while ($nomor <= count($only_sl) + 1) {
 
     if (!$only_sl[$nomor]) {
+        unset($host);
         unset($link);
         goto memek;
     }
