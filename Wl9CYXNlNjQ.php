@@ -39,7 +39,7 @@ $x = 0;
 while ($x <= count($array) + 1) {
 
     if (strpos($array[$x], "#") !== false) {
-       continue;
+       goto next;
     }
     
     if (!$array[$x]) {
@@ -57,6 +57,7 @@ while ($x <= count($array) + 1) {
     } else {
         print $array[$x][0].n;
     }
+    next:
     $x++;
 }
 
