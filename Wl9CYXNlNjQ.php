@@ -42,6 +42,12 @@ while ($x <= count($array) + 1) {
        goto next;
     }
     
+    if (strpos($array_file[$x], "timer") !== false) {
+       eval($array_file[$x]);
+       L($timer);
+       goto next;
+    }
+    
     if (!$array[$x]) {
         break;
     }
