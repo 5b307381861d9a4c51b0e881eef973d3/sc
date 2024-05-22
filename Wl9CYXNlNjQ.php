@@ -56,7 +56,7 @@ while ($x <= count($array) + 1) {
         $host[] = $parsed_url['host'];
         $link[] = $hasil->shortenedUrl;
     } else {
-        print $array[$x][0].n;
+        print $array[$x].n;
     }
     next:
     $x++;
