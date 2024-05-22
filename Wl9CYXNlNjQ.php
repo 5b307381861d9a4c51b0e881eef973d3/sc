@@ -42,12 +42,6 @@ while ($x <= count($array) + 1) {
        goto next;
     }
     
-    if (strpos($array_file[$x], "timer") !== false) {
-       eval($array_file[$x]);
-       L($timer);
-       goto next;
-    }
-    
     if (!$array[$x]) {
         break;
     }
@@ -56,7 +50,8 @@ while ($x <= count($array) + 1) {
     
     $redirect_url = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
     $hasil = curl($short_url.urlencode($redirect_url))[2];
-    
+    $host = [];
+    $link = [];
     if($hasil->status == "success") {
         $host[] = $parsed_url['host'];
         $link[] = $hasil->shortenedUrl;
