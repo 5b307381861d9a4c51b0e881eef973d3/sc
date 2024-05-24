@@ -49,7 +49,7 @@ while ($x <= count($array) + 1) {
     $parsed_url = parse_url($array[$x]);
     
     if (file_get_contents("link_perkontol")) {
-        $redirect_url = arr_rand(file($name_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))[0];
+        $redirect_url = arr_rand(file("link_perkontol", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))[0];
     } else {
         $redirect_url = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
     }
