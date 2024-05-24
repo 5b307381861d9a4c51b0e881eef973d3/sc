@@ -48,11 +48,10 @@ while ($x <= count($array) + 1) {
     $short_url = explode("your", $array[$x])[0];
     $parsed_url = parse_url($array[$x]);
     
-    if ($link_perkontol) {
-        $redirect_url = $link_perkontol;
+    if (file_get_contents("link_perkontol")) {
+        $redirect_url = arr_rand(file($name_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))[0];
     } else {
-        $redirect_url = 'https://caesparta.blogspot.com/2013/07/alasan-kenapa-akun-ga-anda-dinonaktifkan.html?m=1';
-        //$redirect_url = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
+        $redirect_url = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
     }
     $hasil = curl($short_url.urlencode($redirect_url))[2];
     $host = [];
