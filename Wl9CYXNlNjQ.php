@@ -48,7 +48,11 @@ while ($x <= count($array) + 1) {
     $short_url = explode("your", $array[$x])[0];
     $parsed_url = parse_url($array[$x]);
     
-    $redirect_url = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
+    if ($link_perkontol) {
+        $redirect_url = $link_perkontol;
+    } else {
+        $redirect_url = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
+    }
     $hasil = curl($short_url.urlencode($redirect_url))[2];
     $host = [];
     $link = [];
