@@ -49,11 +49,16 @@ while ($x <= count($array) + 1) {
     $parsed_url = parse_url($array[$x]);
     
     if (file_get_contents("link_perkontol")) {
-        $redirect_url = arr_rand(file("link_perkontol", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))[0];
+        $eek = arr_rand(file("link_perkontol", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))[0];
     } else {
-        $redirect_url = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
+        $eek = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
     }
-    $hasil = curl($short_url.($redirect_url));
+    if (preg_match("#(adfoc.us)#is", $eek)) {
+        $redirect_url = $redirect_url;
+    } else {
+        $redirect_url = urlencode($eek);
+    }
+    $hasil = curl($short_url.$redirect_url);
     $host = [];
     $link = [];
     if (6 >= strpos($hasil[1], "//")) {
