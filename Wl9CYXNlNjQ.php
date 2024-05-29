@@ -53,12 +53,14 @@ while ($x <= count($array) + 1) {
     } else {
         $redirect_url = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
     }
-    $hasil = curl($short_url.urlencode($redirect_url))[2];
+    $hasil = curl($short_url.($redirect_url));
     $host = [];
     $link = [];
-    if($hasil->status == "success") {
+    if (6 >= strpos($r, "//")) {
+        print($r);
+    } elseif ($hasil[2]->status == "success") {
         $host[] = $parsed_url['host'];
-        $link[] = $hasil->shortenedUrl;
+        $link[] = $hasil[2]->shortenedUrl;
     } else {
         print $parsed_url['host'].n;
     }
