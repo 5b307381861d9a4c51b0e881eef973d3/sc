@@ -54,7 +54,7 @@ while ($x <= count($array) + 1) {
         $eek = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
     }
     if (preg_match("#(adfoc.us)#is", $eek)) {
-        $redirect_url = $redirect_url;
+        $redirect_url = $eek;
     } else {
         $redirect_url = urlencode($eek);
     }
