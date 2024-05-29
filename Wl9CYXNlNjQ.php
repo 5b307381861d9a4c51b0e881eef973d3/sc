@@ -61,12 +61,12 @@ while ($x <= count($array) + 1) {
     $hasil = curl($short_url.$redirect_url);
     $host = [];
     $link = [];
-    if (6 >= strpos($hasil[1], "//")) {
-        $host[] = $parsed_url['host'];
-        $link[] = $hasil[1];
-    } elseif ($hasil[2]->status == "success") {
+    if ($hasil[2]->status == "success") {
         $host[] = $parsed_url['host'];
         $link[] = $hasil[2]->shortenedUrl;
+    } elseif (6 >= strpos($hasil[1], "//")) {
+        $host[] = $parsed_url['host'];
+        $link[] = $hasil[1];
     } else {
         print $parsed_url['host'].n;
     }
@@ -90,15 +90,10 @@ while ($nomor <= count($only_sl) + 1) {
     $n++;
     $r = bypass_shortlinks($only_sl[$nomor]);
 
-    if (6 >= strpos($r, "//")) {
-        print($r);
-    } elseif ($r->status !== "success") {
-        if (0 >= $n) {
-            goto b;
-        }
-    }
     if ($r->status == "success") {
         print_r($r);
+    } elseif (6 >= strpos($r, "//")) {
+        print($r);
     } else {
         print m."invalid!".n;
     }
