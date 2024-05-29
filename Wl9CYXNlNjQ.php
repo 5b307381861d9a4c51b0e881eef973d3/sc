@@ -30,7 +30,7 @@ if (!file_get_contents($name_file)) {
 }
 $array_file = file($name_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 $array = arr_rand($array_file);
-if (strpos($array[0], "api=") === false) {
+if (strpos($array[0], "api") === false) {
     unlink($name_file);
     goto memek;
 }
@@ -56,8 +56,9 @@ while ($x <= count($array) + 1) {
     $hasil = curl($short_url.($redirect_url));
     $host = [];
     $link = [];
-    if (6 >= strpos($r, "//")) {
-        print($r);
+    if (6 >= strpos($hasil[1], "//")) {
+        $host[] = $parsed_url['host'];
+        $link[] = $hasil[1];
     } elseif ($hasil[2]->status == "success") {
         $host[] = $parsed_url['host'];
         $link[] = $hasil[2]->shortenedUrl;
@@ -84,7 +85,9 @@ while ($nomor <= count($only_sl) + 1) {
     $n++;
     $r = bypass_shortlinks($only_sl[$nomor]);
 
-    if ($r->status !== "success") {
+    if (6 >= strpos($r, "//")) {
+        print($r);
+    } elseif ($r->status !== "success") {
         if (0 >= $n) {
             goto b;
         }
