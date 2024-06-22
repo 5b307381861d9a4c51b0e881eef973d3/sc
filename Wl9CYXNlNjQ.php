@@ -91,10 +91,15 @@ while ($nomor <= count($only_sl) + 1) {
 
     if ($r->status == "success" || 6 >= strpos($r, "//")) {
         print_r($r);
+    } elseif ($r->status !== "success") {
+        if (0 >= $n) {
+            goto b;
+        }
     } else {
         print m."invalid!".n;
     }
     line();
     $nomor++;
 }
-goto memek;
+
+
