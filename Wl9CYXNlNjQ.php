@@ -5,10 +5,10 @@ if (!$eval) {
     $reques = array(
         1 => "xevil", 2 => "multibot"
     );
-    #ket(1, "xevil", 2, "multibot");
+    ket(1, "xevil", 2, "multibot");
     
     while(true) {
-        $inp = 2;#tx("number", 1);
+        $inp = tx("number", 1);
       
         if ($inp == 0) {
             continue;
@@ -19,10 +19,11 @@ if (!$eval) {
     eval(str_replace('seconds = 90', 'seconds = 5', str_replace('<?php',"", str_replace("mode_proxy", $method_proxy, str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))))));
 }
 define('bypassed', 'bypassed');
-$name_file = "link_sl.php2";
+$name_file = "link_sl.php";
 memek:
 $host = [];
 $link = [];
+
 if (!file_get_contents($name_file)) {
     print p.base64_decode("aHR0cHM6Ly9leGFtcGxlLmNvbS9hcGk/YXBpPWFwaWtleSZ1cmw9eW91cmRlc3RpbmF0aW9ubGluay5jb20KaHR0cHM6Ly9leGFtcGxlLnh5ei9hcGk/YXBpPWFwaWtleSZ1cmw9eW91cmRlc3RpbmF0aW9ubGluay5jb20mYWxpYXM9Q3VzdG9tQWxpYXMmZm9ybWF0PXRleHQ=").n;
     tx("enter to continue");
@@ -48,20 +49,12 @@ while ($x <= count($array) + 1) {
     }
     $short_url = explode("your", $array[$x])[0];
     $parsed_url = parse_url($array[$x]);
-    $i = 0;
-    while ($i <= count($array)) {
-        if (strpos($array_file[$i], $parsed_url['host']) !== false) {
-            $id = $i + 10001;
-            break;
-        }
-        $i++;
-    }
+    
     if (file_get_contents("link_perkontol")) {
         $eek = arr_rand(file("link_perkontol", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES))[0];
     } else {
         $eek = 'https://autofaucet.org/dashboard/shortlinks/visited/'.az_num(rand(10, 32));
     }
-    
     if (preg_match("#(adfoc.us)#is", $short_url)) {
         $redirect_url = $eek;
     } else {
@@ -69,7 +62,7 @@ while ($x <= count($array) + 1) {
     }
     $hasi = curl($short_url.$redirect_url);
     $hasil = $hasi[2]->shortenedUrl ?? $hasi[1];
-
+    
     if (strpos($hasil, "http") !== false) {
         $host[] = $parsed_url['host'];
         $link[] = $hasil;
