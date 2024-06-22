@@ -1,20 +1,5 @@
 <?php
 
-$method_proxy = "flashproxy";
-//$method_proxy = "proxyscrape";
-//$method_proxy = "normal";
-function get_e($input) {
-    error_reporting(0);
-    while (true) {
-        $string = file_get_contents($input);
-        if (!$string) {
-            continue;
-        } else {
-            return $string;
-        }
-    }
-}
-
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
     $reques = array(
