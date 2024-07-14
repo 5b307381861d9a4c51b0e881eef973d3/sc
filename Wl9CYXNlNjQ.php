@@ -19,7 +19,7 @@ if (!$eval) {
     eval(str_replace('seconds = 90', 'seconds = 5', str_replace('<?php',"", str_replace("mode_proxy", $method_proxy, str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))))));
 }
 define('bypassed', 'bypassed');
-$name_file = "link_sl.php";
+$name_file = $alt_name ?: "link_sl.php";
 memek:
 $host = [];
 $link = [];
