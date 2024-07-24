@@ -63,7 +63,9 @@ while ($x <= count($array) + 1) {
     $hasi = curl($short_url.$redirect_url);
     $hasil = $hasi[2]->shortenedUrl ?? $hasi[1];
     
-    if (strpos($hasil, "http") !== false) {
+    if (strlen($hasil) > 150) {
+        print $parsed_url['host'].n;
+    } elseif (strpos($hasil, "http") !== false) {
         $host[] = $parsed_url['host'];
         $link[] = $hasil;
     } else {
