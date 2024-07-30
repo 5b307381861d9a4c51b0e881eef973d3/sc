@@ -58,23 +58,21 @@ while ($x <= count($array) + 1) {
     }
     $eek = 'https://'.$private_host.'?token='.$id.'.'.substr(md5(time()), 0, 25);
     
-    if (strlen($hasil) > 150) {
-        print $parsed_url['host'].n;
-    } elseif (preg_match("#(adfoc.us)#is", $short_url)) {
+    if (preg_match("#(adfoc.us)#is", $short_url)) {
         $redirect_url = $eek;
     } else {
         $redirect_url = urlencode($eek);
     }
     $hasi = curl($short_url.$redirect_url);
-    $hasil = $hasi[2]->shortenedUrl ?: $hasi[1];
+    $only_sl = $hasi[2]->shortenedUrl ?: $hasi[1];
 
-    if (strpos(parse_url($hasil)["scheme"], "http") !== false) {
+    if (strpos(parse_url($only_sl)["scheme"], "http") !== false) {
         print k."host: ".$parsed_url['host'].n;
-        print k."link: ".$hasil.n;
+        print k."link: ".$only_sl.n;
         $n = 0;
         b:
         $n++;
-        $r = bypass_shortlinks($hasil);
+        $r = bypass_shortlinks($only_sl);
         
         if ($r->status == "success" || 6 >= strpos($r, "//")) {
             print_r($r);
