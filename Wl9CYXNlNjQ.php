@@ -96,7 +96,7 @@ while ($x <= count($array) + 1) {
     next:
     $x++;
 }
-
+goto memek;
 
 /*
 
