@@ -1,25 +1,5 @@
 <?php
 
-if (!$eval) {
-    eval(str_replace('<?php', "", get_e("build_index.php")));
-    $reques = array(
-        1 => "xevil", 2 => "multibot"
-    );
-    ket(1, "xevil", 2, "multibot");
-    
-    while(true) {
-        $inp = tx("number", 1);
-      
-        if ($inp == 0) {
-            continue;
-        } elseif (2 >= $inp) {
-            break;
-        }
-    }
-    eval(str_replace('seconds = 90', 'seconds = 5', str_replace('<?php',"", str_replace("mode_proxy", $method_proxy, str_replace("request_captcha", $reques[$inp], get_e("shortlink_index.php"))))));
-}
-
-
 
 if (!$eval) {
     eval(str_replace('<?php', "", get_e("build_index.php")));
